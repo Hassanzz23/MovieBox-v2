@@ -48,7 +48,7 @@
 
             top: 125px;
 
-            width: 48px;
+            width: 47px;
             height: 48px;
 
             border: none;
