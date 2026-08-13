@@ -1,0 +1,101 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TodoController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\WatchlistController;
+use App\Http\Controllers\ForgetPasswordController;
+use App\Http\Controllers\FavoriteController;
+
+
+
+
+Route::get('/signup', [AuthController::class, 'register'])->name('register');
+Route::post('/signup', [AuthController::class, 'registerPost'])->name('register.post');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index')->middleware('auth');
+
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/watchlist', [TodoController::class, 'index'])->name('todo.index')->middleware('auth');
+Route::get('/todos/create', [TodoController::class, 'create'])->name('todo.create')->middleware('auth');
+Route::get('/todos/{todo}', [TodoController::class, 'show'])->name('todo.show');
+Route::get('/todos/{todo}/completed', [TodoController::class, 'completed'])->name('todo.completed');
+Route::post('/todos', [TodoController::class, 'store'])->name('todo.store')->middleware('auth');
+Route::get('/todos/{todo}/edit', [TodoController::class, 'edit'])->name('todo.edit');
+Route::put('/todos/{todo}', [TodoController::class, 'update'])->name('todo.update');
+Route::delete('/todos/{todo}/', [TodoController::class, 'destroy'])->name('todo.destroy');
+
+
+
+Route::get('/movies/{homeMovie}', [HomeController::class, 'show'])->name('home-movie.show');
+
+
+Route::get('/watchlist', [WatchlistController::class, 'index'])
+    ->name('watchlist.index')
+    ->middleware('auth');
+
+Route::post('/watchlist/add/{homeMovie}', [WatchlistController::class, 'add'])
+    ->name('watchlist.add')
+    ->middleware('auth');
+
+Route::get('/watchlist/search', [WatchlistController::class, 'search'])
+    ->name('watchlist.search')
+    ->middleware('auth');
+
+Route::get('/watchlist/select/{imdb_id}', [WatchlistController::class, 'selectOmdb'])
+    ->name('watchlist.select')
+    ->middleware('auth');
+
+Route::post('/watchlist', [WatchlistController::class, 'store'])
+    ->name('watchlist.store')
+    ->middleware('auth');
+
+Route::put('/watchlist/{todo}/watched', [WatchlistController::class, 'watched'])
+    ->name('watchlist.watched')
+    ->middleware('auth');
+
+Route::put('/watchlist/{todo}/rating', [WatchlistController::class, 'rate'])
+    ->name('watchlist.rate')
+    ->middleware('auth');
+
+Route::delete('/watchlist/{todo}', [WatchlistController::class, 'remove'])
+    ->name('watchlist.remove')
+    ->middleware('auth');
+
+Route::get('/watchlist/{todo}', [WatchlistController::class, 'show'])
+    ->name('watchlist.show')
+    ->middleware('auth');
+
+Route::get('/forget-password', [ForgetPasswordController::class, 'forgetPassword'])
+    ->name('forget.password');
+
+Route::post('/forget-password', [ForgetPasswordController::class, 'forgetPasswordPost'])
+    ->name('forget.password.post');
+
+Route::get('/reset-password/{token}', [ForgetPasswordController::class, 'resetPassword'])
+    ->name('reset.password');
+
+Route::post('/reset-password', [ForgetPasswordController::class, 'resetPasswordPost'])
+    ->name('reset.password.post');
+
+Route::get('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
+
+
+
+Route::get('/favorites', [FavoriteController::class, 'index'])
+    ->name('favorites.index')
+    ->middleware('auth');
+
+Route::post('/favorites/{todo}', [FavoriteController::class, 'add'])
+    ->name('favorites.add')
+    ->middleware('auth');
+
+Route::delete('/favorites/{todo}', [FavoriteController::class, 'remove'])
+    ->name('favorites.remove')
+    ->middleware('auth');
