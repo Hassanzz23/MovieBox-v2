@@ -49,7 +49,7 @@
             top: 125px;
 
             width: 47px;
-            height: 48px;
+            height: 47px;
 
             border: none;
             border-radius: 50%;
