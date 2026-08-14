@@ -1,60 +1,200 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MovieBox v2
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+MovieBox v2 is a Laravel-based movie management application that provides a complete authentication system, personalized watchlist and favorites, movie search, ratings, reviews, and theme customization.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Authentication
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Sign Up** — Create a new user account.
+- **Log In** — Securely authenticate users.
+- **Forgot Password** — Request a password reset.
+- **Password Reset Email** — Receive a password reset email.
+- **Log Out** — Securely log out from the application.
+- **Welcome Email** — Receive a welcome email after creating an account.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Movie Management
 
-## Learning Laravel
+- **Movie Search** — Search for movies.
+- **Watchlist** — Add and remove movies from your personal watchlist.
+- **Favorites** — Add and remove movies from your favorites.
+- **Change Watching Status** — Change a movie's status, including marking it as **Watched**.
+- **Movie Rating** — Rate watched movies.
+- **Add to Watchlist from Home** — Add movies directly to your watchlist from the home page.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### User Profile
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Profile Page** — View user account information.
+- **Watchlist** — Manage movies saved for watching.
+- **Favorites** — Manage favorite movies.
 
-## Laravel Sponsors
+### UI & Theme
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Dark Mode** — Switch the application to a dark theme.
+- **Light Mode** — Switch the application to a light theme.
 
-### Premium Partners
+### Reviews & Email
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **Movie Reviews** — Users can submit reviews for movies.
+- **Review Email Notification** — Receive an email related to submitted reviews.
 
-## Contributing
+## Built With
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Laravel**
+- **PHP**
+- **MySQL**
+- **Blade**
+- **HTML / CSS / JavaScript**
 
-## Code of Conduct
+## Project Development
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+MovieBox v2 was developed as a Laravel project with a focus on authentication, movie management, user personalization, and watchlist functionality.
 
-## Security Vulnerabilities
+The **backend and application logic were developed by me using Laravel**, including the database structure, models, controllers, routes, validation, authentication, CRUD operations, watchlist, favorites, movie ratings, and email functionality.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The **frontend/UI was developed with the assistance of AI tools**.
+
+## Installation & Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Hassanzz23/MovieBox-v2.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd MovieBox-v2
+```
+
+### 2. Install PHP dependencies
+
+Make sure you have PHP and Composer installed, then run:
+
+```bash
+composer install
+```
+
+### 3. Create the environment file
+
+Copy `.env.example` and create a `.env` file.
+
+On Windows, you can simply copy `.env.example` and rename the copy to `.env`.
+
+### 4. Generate the application key
+
+```bash
+php artisan key:generate
+```
+
+### 5. Configure the database
+
+Open the `.env` file and configure your MySQL database:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+Create the database in MySQL before running the migrations.
+
+### 6. Run migrations
+
+```bash
+php artisan migrate
+```
+
+If the project contains seeders and you want to populate the database with sample data:
+
+```bash
+php artisan db:seed
+```
+
+### 7. Configure email
+
+MovieBox v2 uses email functionality for features such as password reset and welcome emails.
+
+Configure your mail settings in `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=your_smtp_host
+MAIL_PORT=587
+MAIL_USERNAME=your_email
+MAIL_PASSWORD=your_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your_email
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+> Never commit your `.env` file or real email credentials to GitHub.
+
+### 8. Run the application
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Usage
+
+After starting the application, users can:
+
+1. Create an account or log in.
+2. Search for movies.
+3. Add movies to their watchlist.
+4. Remove movies from their watchlist.
+5. Add or remove movies from favorites.
+6. Change the watching status of movies.
+7. Mark movies as **Watched**.
+8. Rate movies.
+9. Add movies to the watchlist directly from the home page.
+10. View and manage their profile.
+11. Submit movie reviews.
+12. Switch between **Dark Mode** and **Light Mode**.
+13. Reset their password through the password reset email.
+
+## Project Structure
+
+The project follows the standard Laravel application structure:
+
+```text
+MovieBox-v2/
+├── app/
+├── bootstrap/
+├── config/
+├── database/
+├── public/
+├── resources/
+├── routes/
+├── storage/
+├── tests/
+├── .env.example
+├── artisan
+├── composer.json
+├── composer.lock
+├── package.json
+└── README.md
+```
+
+## Author
+
+**Hassanzz23**
+
+GitHub: https://github.com/Hassanzz23
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-"# MovieBox-v2" 
+This project was created as a learning and portfolio project.
