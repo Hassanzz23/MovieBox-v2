@@ -24,7 +24,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/watchlist', [TodoController::class, 'index'])->name('todo.index')->middleware('auth');
 Route::get('/todos/create', [TodoController::class, 'create'])->name('todo.create')->middleware('auth');
 Route::get('/todos/{todo}', [TodoController::class, 'show'])->name('todo.show');
-Route::get('/todos/{todo}/completed', [TodoController::class, 'completed'])->name('todo.completed');
 Route::post('/todos', [TodoController::class, 'store'])->name('todo.store')->middleware('auth');
 Route::get('/todos/{todo}/edit', [TodoController::class, 'edit'])->name('todo.edit');
 Route::put('/todos/{todo}', [TodoController::class, 'update'])->name('todo.update');
@@ -83,8 +82,8 @@ Route::get('/reset-password/{token}', [ForgetPasswordController::class, 'resetPa
 Route::post('/reset-password', [ForgetPasswordController::class, 'resetPasswordPost'])
     ->name('reset.password.post');
 
-Route::get('/logout', [AuthController::class, 'logout'])
-    ->name('logout');
+// Route::get('/logout', [AuthController::class, 'logout'])
+//     ->name('logout');
 
 
 

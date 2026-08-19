@@ -198,7 +198,7 @@ class WatchlistController extends Controller
                 's' => $query,
             ]
         );
-        
+
 
         if (!$response->successful()) {
             return redirect()

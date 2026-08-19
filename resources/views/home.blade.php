@@ -13,7 +13,6 @@
             scroll-behavior: smooth;
             padding-bottom: 15px;
 
-            /* Hide scrollbar */
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
@@ -37,11 +36,6 @@
         .movie-card h6 {
             margin-bottom: 0;
         }
-
-
-        /* =========================
-               Slider Buttons
-               ========================= */
 
         .movie-arrow {
             position: absolute;
@@ -97,9 +91,7 @@
         }
 
 
-        /* =========================
-               Dark Mode
-               ========================= */
+
 
         [data-bs-theme="dark"] .movie-arrow {
             background: rgba(255, 255, 255, 0.18);
@@ -113,9 +105,6 @@
     </style>
 
 
-    {{-- =========================
-         Movies
-    ========================= --}}
 
     <div class="mb-5">
 
@@ -165,9 +154,6 @@
     </div>
 
 
-    {{-- =========================
-         TV Shows
-    ========================= --}}
 
     <div class="mb-5">
 
@@ -217,9 +203,7 @@
     </div>
 
 
-    {{-- =========================
-         Animations
-    ========================= --}}
+
 
     <div class="mb-5">
 
@@ -269,10 +253,6 @@
     </div>
 
 
-    {{-- =========================
-         Anime
-    ========================= --}}
-
     <div class="mb-5">
 
         <h3 class="mb-3">
@@ -321,9 +301,7 @@
     </div>
 
 
-    {{-- =========================
-         Slider JavaScript
-    ========================= --}}
+
 
     <script>
         document.querySelectorAll('.movie-slider').forEach(slider => {

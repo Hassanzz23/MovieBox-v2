@@ -234,14 +234,12 @@
         </div>
 
 
-        {{-- Pagination --}}
         <div class="mt-3">
 
             {{ $todos->links() }}
 
         </div>
     @else
-        {{-- Empty WatchList --}}
         <div class="text-center py-5">
 
             <h4>
