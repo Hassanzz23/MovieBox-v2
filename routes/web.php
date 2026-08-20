@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TodoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
@@ -9,30 +8,22 @@ use App\Http\Controllers\WatchlistController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\FavoriteController;
 
-
-
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/signup', [AuthController::class, 'register'])->name('register');
 Route::post('/signup', [AuthController::class, 'registerPost'])->name('register.post');
+
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index')->middleware('auth');
 
+Route::get('/profile', [ProfileController::class, 'index'])
+    ->name('profile.index')
+    ->middleware('auth');
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/watchlist', [TodoController::class, 'index'])->name('todo.index')->middleware('auth');
-Route::get('/todos/create', [TodoController::class, 'create'])->name('todo.create')->middleware('auth');
-Route::get('/todos/{todo}', [TodoController::class, 'show'])->name('todo.show');
-Route::post('/todos', [TodoController::class, 'store'])->name('todo.store')->middleware('auth');
-Route::get('/todos/{todo}/edit', [TodoController::class, 'edit'])->name('todo.edit');
-Route::put('/todos/{todo}', [TodoController::class, 'update'])->name('todo.update');
-Route::delete('/todos/{todo}/', [TodoController::class, 'destroy'])->name('todo.destroy');
-
-
-
-Route::get('/movies/{homeMovie}', [HomeController::class, 'show'])->name('home-movie.show');
-
+Route::get('/movies/{homeMovie}', [HomeController::class, 'show'])
+    ->name('home-movie.show');
 
 Route::get('/watchlist', [WatchlistController::class, 'index'])
     ->name('watchlist.index')
@@ -81,11 +72,6 @@ Route::get('/reset-password/{token}', [ForgetPasswordController::class, 'resetPa
 
 Route::post('/reset-password', [ForgetPasswordController::class, 'resetPasswordPost'])
     ->name('reset.password.post');
-
-// Route::get('/logout', [AuthController::class, 'logout'])
-//     ->name('logout');
-
-
 
 Route::get('/favorites', [FavoriteController::class, 'index'])
     ->name('favorites.index')
