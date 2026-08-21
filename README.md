@@ -26,6 +26,7 @@ MovieBox v2 is a Laravel-based movie management application that provides a comp
 ### User Profile
 
 - **Profile Page** — View user account information.
+- **Change Name** — Change the name associated with the user account.
 - **Watchlist** — Manage movies saved for watching.
 - **Favorites** — Manage favorite movies.
 

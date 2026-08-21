@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('content')
-    <div class="row justify-content-center">
+    <div class="row justify-content-center g-4">
 
         <div class="col-12 col-md-6">
 
@@ -121,6 +121,43 @@
                         </div>
 
                     </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-12 col-md-5">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header fw-bold">
+                    Sign Up Requirements
+                </div>
+
+                <div class="card-body">
+
+                    <p class="mb-2">
+                        ● Name must not be empty
+                    </p>
+
+                    <p class="mb-2">
+                        ● Email must not be empty
+                    </p>
+
+                    <p class="mb-2">
+                        ● Email must be a valid email address
+                    </p>
+
+                    <p class="mb-2">
+                        ● Password must be at least 4 characters
+                    </p>
+
+                    <p class="mb-0">
+                        ● Password confirmation must match
+                    </p>
 
                 </div>
 

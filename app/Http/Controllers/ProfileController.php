@@ -21,6 +21,21 @@ class ProfileController extends Controller
         ));
     }
 
+    public function changeName()
+    {
+        return view('profile.change-name');
+    }
+
+    public function updateName(Request $request)
+    {
+        $validated = $request->validate(
+            ['name' => 'required|string|unique:users,name,' . auth()->id(),]
+        );
+        auth()->user()->update(['name' => $validated['name'],]);
+        return redirect()->route('profile.index')
+            ->with('success', 'Name changed successfully.');
+    }
+
     public function changePassword()
     {
         return view('profile.change-password');

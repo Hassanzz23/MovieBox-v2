@@ -15,7 +15,7 @@
 
     </div>
 
-    <div class="card shadow-sm rounded-0">
+    <div class="card shadow-sm rounded">
 
         <div class="card-header fw-bold">
             Profile Information
@@ -25,15 +25,24 @@
 
             <div class="mb-3">
 
-                <label class="text-muted">
-                    Name
-                </label>
+                <div class="d-flex justify-content-between align-items-center">
 
-                <div class="fw-bold">
+                    <label class="text-muted mb-0">
+                        Name
+                    </label>
+
+                    <a href="{{ route('profile.change-name') }}" class="btn btn-dark btn-sm">
+                        Change Name
+                    </a>
+
+                </div>
+
+                <div class="fw-bold mt-2">
                     {{ auth()->user()->name }}
                 </div>
 
             </div>
+
 
 
             <div class="mb-4">

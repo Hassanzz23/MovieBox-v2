@@ -3,94 +3,135 @@
 @section('content')
     @include('profile.nav')
 
-    <div class="mb-4">
+    <div class="row justify-content-center g-4">
 
-        <h2 class="mb-1 fw-bold">
-            Change Password
-        </h2>
+        <div class="col-12 col-md-6">
 
-        <p class="text-muted mb-0">
-            Update your account password
-        </p>
+            <div class="card shadow-sm">
 
-    </div>
+                <h5 class="card-header">
+                    Change Password
+                </h5>
+
+                <div class="card-body">
+
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
 
-    <div class="card shadow-sm rounded-0">
+                    <form action="{{ route('profile.update-password') }}" method="POST">
 
-        <div class="card-header fw-bold">
-            Change Password
+                        @csrf
+                        @method('PUT')
+
+
+                        <div class="mb-3">
+
+                            <label for="old_password" class="form-label">
+                                Old Password
+                            </label>
+
+                            <input type="password" name="old_password" id="old_password"
+                                class="form-control @error('old_password') is-invalid @enderror">
+
+                            @error('old_password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label for="new_password" class="form-label">
+                                New Password
+                            </label>
+
+                            <input type="password" name="new_password" id="new_password"
+                                class="form-control @error('new_password') is-invalid @enderror">
+
+                            @error('new_password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                        </div>
+
+
+                        <div class="mb-4">
+
+                            <label for="new_password_confirmation" class="form-label">
+                                Confirm New Password
+                            </label>
+
+                            <input type="password" name="new_password_confirmation" id="new_password_confirmation"
+                                class="form-control @error('new_password_confirmation') is-invalid @enderror">
+
+                            @error('new_password_confirmation')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                        </div>
+
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <a href="{{ route('profile.index') }}" class="btn btn-secondary">
+                                Cancel
+                            </a>
+
+                            <button type="submit" class="btn btn-dark">
+                                Change Password
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="card-body">
 
-            <form action="{{ route('profile.update-password') }}" method="POST">
+        <div class="col-12 col-md-5">
 
-                @csrf
-                @method('PUT')
+            <div class="card shadow-sm">
 
+                <div class="card-header fw-bold">
+                    Password Requirements
+                </div>
 
-                <div class="mb-3">
+                <div class="card-body">
 
-                    <label for="old_password" class="form-label">
-                        Old Password
-                    </label>
+                    <p class="mb-2">
+                        ● Old password is required
+                    </p>
 
-                    <input type="password" name="old_password" id="old_password"
-                        class="form-control @error('old_password') is-invalid @enderror" required>
+                    <p class="mb-2">
+                        ● New password is required
+                    </p>
 
-                    @error('old_password')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                    <p class="mb-2">
+                        ● New password must be at least 4 characters
+                    </p>
+
+                    <p class="mb-0">
+                        ● New password confirmation must match
+                    </p>
 
                 </div>
 
-
-                <div class="mb-3">
-
-                    <label for="new_password" class="form-label">
-                        New Password
-                    </label>
-
-                    <input type="password" name="new_password" id="new_password"
-                        class="form-control @error('new_password') is-invalid @enderror" required>
-
-                    @error('new_password')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-
-                </div>
-
-
-                <div class="mb-4">
-
-                    <label for="new_password_confirmation" class="form-label">
-                        Confirm New Password
-                    </label>
-
-                    <input type="password" name="new_password_confirmation" id="new_password_confirmation"
-                        class="form-control" required>
-
-                </div>
-
-
-                <div class="d-flex gap-2">
-
-                    <button type="submit" class="btn btn-dark">
-                        Change Password
-                    </button>
-
-                    <a href="{{ route('profile.index') }}" class="btn btn-secondary">
-                        Cancel
-                    </a>
-
-                </div>
-
-            </form>
+            </div>
 
         </div>
 
