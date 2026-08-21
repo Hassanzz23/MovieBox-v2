@@ -44,11 +44,11 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <h2 class="mb-0 fw-bold">
-            {{ $todo->title }}
+            {{ $movie->title }}
 
-            @if ($todo->year)
+            @if ($movie->year)
                 <span class="text-muted fw-normal">
-                    ({{ $todo->year }})
+                    ({{ $movie->year }})
                 </span>
             @endif
         </h2>
@@ -64,69 +64,63 @@
 
         <div class="row g-0">
 
-            {{-- Poster --}}
             <div class="col-12 col-md-4">
 
-                @if ($todo->image)
-                    <img src="{{ asset('storage/images/' . $todo->image) }}" alt="{{ $todo->title }}"
+                @if ($movie->image)
+                    <img src="{{ asset('storage/images/' . $movie->image) }}" alt="{{ $movie->title }}"
                         class="img-fluid w-100 rounded-0" style="max-height: 600px; object-fit: cover;">
                 @endif
 
             </div>
 
 
-            {{-- Information --}}
             <div class="col-12 col-md-8">
 
                 <div class="card-body p-4">
 
                     <div class="movie-details">
 
-                        {{-- Title --}}
                         <h3 class="movie-details-title fw-bold">
 
-                            {{ $todo->title }}
+                            {{ $movie->title }}
 
-                            @if ($todo->year)
+                            @if ($movie->year)
                                 <span class="text-muted fw-normal">
-                                    ({{ $todo->year }})
+                                    ({{ $movie->year }})
                                 </span>
                             @endif
 
                         </h3>
 
 
-                        {{-- Genre --}}
-                        @if ($todo->genre)
+                        @if ($movie->genre)
                             <p class="movie-details-genre text-muted">
-                                {{ $todo->genre }}
+                                {{ $movie->genre }}
                             </p>
                         @endif
 
 
-                        {{-- Description --}}
-                        @if ($todo->description)
+                        @if ($movie->description)
                             <p class="movie-details-description">
-                                {{ $todo->description }}
+                                {{ $movie->description }}
                             </p>
                         @endif
 
 
-                        {{-- Status --}}
                         <div class="movie-details-status">
 
-                            @if ($todo->status)
+                            @if ($movie->status)
                                 <span class="badge bg-success">
                                     Watched
                                 </span>
 
-                                @if ($todo->rating)
+                                @if ($movie->rating)
                                     <span class="badge bg-dark">
-                                        ⭐ {{ $todo->rating }}/10
+                                        ⭐ {{ $movie->rating }}/10
                                     </span>
                                 @endif
                             @else
-                                <form action="{{ route('watchlist.watched', $todo) }}" method="POST">
+                                <form action="{{ route('watchlist.watched', $movie) }}" method="POST">
 
                                     @csrf
                                     @method('PUT')
@@ -141,10 +135,9 @@
                         </div>
 
 
-                        {{-- Actions --}}
                         <div class="movie-details-actions">
 
-                            <form action="{{ route('watchlist.remove', $todo) }}" method="POST"
+                            <form action="{{ route('watchlist.remove', $movie) }}" method="POST"
                                 onsubmit="return confirm('Remove this movie from your WatchList?')">
 
                                 @csrf

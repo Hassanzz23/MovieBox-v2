@@ -23,8 +23,6 @@
         padding: 35px;
         border-radius: 10px;
     ">
-
-        {{-- Header --}}
         <div style="
             text-align: center;
             margin-bottom: 30px;
@@ -51,7 +49,6 @@
         </div>
 
 
-        {{-- Welcome --}}
         <h2 style="
             margin-bottom: 15px;
             color: #212529;
@@ -78,7 +75,6 @@
         </p>
 
 
-        {{-- Button --}}
         <div style="
             text-align: center;
             margin: 30px 0;
@@ -100,7 +96,6 @@
         </div>
 
 
-        {{-- Features --}}
         <div
             style="
             background-color: #f8f9fa;
@@ -137,7 +132,6 @@
         </div>
 
 
-        {{-- Footer --}}
         <div
             style="
             margin-top: 35px;

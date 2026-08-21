@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Favorite;
-use App\Models\Todo;
+use App\Models\Movie;
 
 class FavoriteController extends Controller
 {
     public function index()
     {
-        $favorites = Favorite::with('todo')
+        $favorites = Favorite::with('movie')
             ->where('user_id', auth()->id())
             ->latest()
             ->paginate(6);
@@ -18,14 +18,14 @@ class FavoriteController extends Controller
     }
 
 
-    public function add(Todo $todo)
+    public function add(Movie $movie)
     {
-        if ($todo->user_id !== auth()->id()) {
+        if ($movie->user_id !== auth()->id()) {
             abort(403);
         }
 
         $exists = Favorite::where('user_id', auth()->id())
-            ->where('todo_id', $todo->id)
+            ->where('movie_id', $movie->id)
             ->exists();
 
         if ($exists) {
@@ -36,7 +36,7 @@ class FavoriteController extends Controller
 
         Favorite::create([
             'user_id' => auth()->id(),
-            'todo_id' => $todo->id,
+            'movie_id' => $movie->id,
         ]);
 
         return redirect()
@@ -45,14 +45,14 @@ class FavoriteController extends Controller
     }
 
 
-    public function remove(Todo $todo)
+    public function remove(Movie $movie)
     {
-        if ($todo->user_id !== auth()->id()) {
+        if ($movie->user_id !== auth()->id()) {
             abort(403);
         }
 
         Favorite::where('user_id', auth()->id())
-            ->where('todo_id', $todo->id)
+            ->where('movie_id', $movie->id)
             ->delete();
 
         return redirect()

@@ -24,7 +24,6 @@
         border-radius: 10px;
     ">
 
-        {{-- Header --}}
         <div style="
             text-align: center;
             margin-bottom: 30px;
@@ -51,7 +50,6 @@
         </div>
 
 
-        {{-- Title --}}
         <h2 style="
             margin-bottom: 15px;
             color: #212529;
@@ -60,7 +58,6 @@
         </h2>
 
 
-        {{-- Greeting --}}
         <p style="
             color: #444;
             line-height: 1.7;
@@ -69,7 +66,6 @@
         </p>
 
 
-        {{-- Message --}}
         <p style="
             color: #444;
             line-height: 1.7;
@@ -79,7 +75,6 @@
         </p>
 
 
-        {{-- Reset Button --}}
         <div style="
             text-align: center;
             margin: 30px 0;
@@ -101,7 +96,6 @@
         </div>
 
 
-        {{-- Expiration --}}
         <div
             style="
             background-color: #f8f9fa;
@@ -123,7 +117,6 @@
         </div>
 
 
-        {{-- Security Message --}}
         <p
             style="
             color: #777;
@@ -136,7 +129,6 @@
         </p>
 
 
-        {{-- Footer --}}
         <div
             style="
             margin-top: 35px;

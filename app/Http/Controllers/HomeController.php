@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HomeMovie;
-use App\Models\Todo;
+use App\Models\Movie;
 
 class HomeController extends Controller
 {
@@ -46,20 +46,20 @@ class HomeController extends Controller
     }
 
     public function show(HomeMovie $homeMovie)
-{
-    $homeMovie->load('category');
+    {
+        $homeMovie->load('category');
 
-    $inWatchlist = false;
+        $inWatchlist = false;
 
-    if (auth()->check()) {
-        $inWatchlist = Todo::where('user_id', auth()->id())
-            ->where('home_movie_id', $homeMovie->id)
-            ->exists();
+        if (auth()->check()) {
+            $inWatchlist = Movie::where('user_id', auth()->id())
+                ->where('home_movie_id', $homeMovie->id)
+                ->exists();
+        }
+
+        return view('home-movies.show', compact(
+            'homeMovie',
+            'inWatchlist'
+        ));
     }
-
-    return view('home-movies.show', compact(
-        'homeMovie',
-        'inWatchlist'
-    ));
-}
 }

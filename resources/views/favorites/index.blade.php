@@ -56,7 +56,6 @@
     </style>
 
 
-    {{-- Page Header --}}
     <div class="mb-4">
 
         <h2 class="mb-1 fw-bold">
@@ -70,7 +69,6 @@
     </div>
 
 
-    {{-- Success Message --}}
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -78,7 +76,6 @@
     @endif
 
 
-    {{-- Info Message --}}
     @if (session('info'))
         <div class="alert alert-info">
             {{ session('info') }}
@@ -86,7 +83,6 @@
     @endif
 
 
-    {{-- Error Message --}}
     @if (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -99,65 +95,67 @@
 
             @foreach ($favorites as $favorite)
                 @php
-                    $todo = $favorite->todo;
+                    $movie = $favorite->todo;
                 @endphp
 
 
                 <div class="col-12 col-sm-6 col-lg-4 mb-4">
 
                     <div class="card favorite-card shadow-sm rounded-0">
+                        @php
+                            $movie = $favorite->movie;
+                        @endphp
+
+                        @if (!$movie)
+                            <p class="text-danger">
+                                Movie not found for Favorite #{{ $favorite->id }}
+                            </p>
+                            @continue
+                        @endif
 
 
-                        {{-- Movie --}}
-                        <a href="{{ route('watchlist.show', $todo) }}"
+                        <a href="{{ route('watchlist.show', $movie) }}"
                             class="text-decoration-none text-dark d-flex flex-column flex-grow-1">
 
-                            {{-- Poster --}}
-                            @if ($todo->image)
-                                <img src="{{ asset('storage/images/' . $todo->image) }}"
-                                    class="favorite-card-poster rounded-0" alt="{{ $todo->title }}">
+                            @if ($movie->image)
+                                <img src="{{ asset('storage/images/' . $movie->image) }}"
+                                    class="favorite-card-poster rounded-0" alt="{{ $movie->title }}">
                             @endif
 
 
-                            {{-- Movie Information --}}
                             <div class="card-body favorite-card-info">
 
-                                {{-- Title --}}
                                 <h5 class="favorite-card-title fw-bold">
 
-                                    {{ $todo->title }}
+                                    {{ $movie->title }}
 
-                                    @if ($todo->year)
+                                    @if ($movie->year)
                                         <span class="text-muted fw-normal">
-                                            ({{ $todo->year }})
+                                            ({{ $movie->year }})
                                         </span>
                                     @endif
 
                                 </h5>
 
 
-                                {{-- Genre --}}
-                                @if ($todo->genre)
+                                @if ($movie->genre)
                                     <p class="favorite-card-genre text-muted">
-                                        {{ $todo->genre }}
+                                        {{ $movie->genre }}
                                     </p>
                                 @endif
 
 
-                                {{-- Status --}}
-                                @if ($todo->status)
+                                @if ($movie->status)
                                     <div class="favorite-card-status">
 
-                                        {{-- Watched --}}
                                         <span class="badge bg-success">
                                             Watched
                                         </span>
 
 
-                                        {{-- Rating --}}
-                                        @if ($todo->rating)
+                                        @if ($movie->rating)
                                             <span class="badge bg-dark">
-                                                ⭐ {{ $todo->rating }}/10
+                                                ⭐ {{ $movie->rating }}/10
                                             </span>
                                         @endif
 
@@ -169,10 +167,9 @@
                         </a>
 
 
-                        {{-- Remove Favorite --}}
                         <div class="card-body pt-0 favorite-card-actions">
 
-                            <form action="{{ route('favorites.remove', $todo) }}" method="POST"
+                            <form action="{{ route('favorites.remove', $movie) }}" method="POST"
                                 onsubmit="return confirm('Remove this movie from your Favorites?')">
 
                                 @csrf
@@ -194,14 +191,12 @@
         </div>
 
 
-        {{-- Pagination --}}
         <div class="mt-3">
 
             {{ $favorites->links() }}
 
         </div>
     @else
-        {{-- Empty Favorites --}}
         <div class="text-center py-5">
 
             <h4>

@@ -49,16 +49,15 @@
     </style>
 
 
-    {{-- Page Header --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <h2 class="mb-0 fw-bold">
 
-            {{ $todo->title }}
+            {{ $movie->title }}
 
-            @if ($todo->year)
+            @if ($movie->year)
                 <span class="text-muted fw-normal">
-                    ({{ $todo->year }})
+                    ({{ $movie->year }})
                 </span>
             @endif
 
@@ -72,63 +71,55 @@
     </div>
 
 
-    {{-- Movie Card --}}
     <div class="card detail-card shadow-sm rounded-0">
 
         <div class="row g-0">
 
 
-            {{-- Poster --}}
             <div class="col-12 col-md-4 detail-poster">
 
-                @if ($todo->image)
-                    <img src="{{ asset('storage/images/' . $todo->image) }}" alt="{{ $todo->title }}">
+                @if ($movie->image)
+                    <img src="{{ asset('storage/images/' . $movie->image) }}" alt="{{ $movie->title }}">
                 @endif
 
             </div>
 
 
-            {{-- Information --}}
             <div class="col-12 col-md-8">
 
                 <div class="card-body p-4 detail-info">
 
 
-                    {{-- Main Information --}}
                     <div class="detail-content">
 
-                        {{-- Title --}}
                         <h3 class="fw-bold mb-2">
 
-                            {{ $todo->title }}
+                            {{ $movie->title }}
 
-                            @if ($todo->year)
+                            @if ($movie->year)
                                 <span class="text-muted fw-normal">
-                                    ({{ $todo->year }})
+                                    ({{ $movie->year }})
                                 </span>
                             @endif
 
                         </h3>
 
 
-                        {{-- Genre --}}
-                        @if ($todo->genre)
+                        @if ($movie->genre)
                             <p class="text-muted mb-4">
-                                {{ $todo->genre }}
+                                {{ $movie->genre }}
                             </p>
                         @endif
 
 
-                        {{-- Description --}}
-                        @if ($todo->description)
+                        @if ($movie->description)
                             <p class="mb-4">
-                                {{ $todo->description }}
+                                {{ $movie->description }}
                             </p>
                         @endif
 
 
-                        {{-- Watch Status --}}
-                        @if ($todo->status)
+                        @if ($movie->status)
                             <div class="mb-2">
 
                                 <span class="badge bg-success">
@@ -136,9 +127,9 @@
                                 </span>
 
 
-                                @if ($todo->rating)
+                                @if ($movie->rating)
                                     <span class="badge bg-dark ms-2">
-                                        ⭐ {{ $todo->rating }}/10
+                                        ⭐ {{ $movie->rating }}/10
                                     </span>
                                 @endif
 
@@ -148,15 +139,13 @@
                     </div>
 
 
-                    {{-- Actions --}}
                     <div class="detail-actions">
 
 
-                        {{-- Mark as Watched --}}
-                        @if (!$todo->status)
+                        @if (!$movie->status)
                             <div class="detail-action">
 
-                                <form action="{{ route('watchlist.watched', $todo) }}" method="POST">
+                                <form action="{{ route('watchlist.watched', $movie) }}" method="POST">
 
                                     @csrf
                                     @method('PUT')
@@ -171,12 +160,10 @@
                         @endif
 
 
-                        {{-- Favorite --}}
                         <div class="detail-action">
 
-                            @if ($todo->favorite)
-                                {{-- Remove from Favorites --}}
-                                <form action="{{ route('favorites.remove', $todo) }}" method="POST"
+                            @if ($movie->favorite)
+                                <form action="{{ route('favorites.remove', $movie) }}" method="POST"
                                     onsubmit="return confirm('Remove this movie from your Favorites?')">
 
                                     @csrf
@@ -188,8 +175,7 @@
 
                                 </form>
                             @else
-                                {{-- Add to Favorites --}}
-                                <form action="{{ route('favorites.add', $todo) }}" method="POST">
+                                <form action="{{ route('favorites.add', $movie) }}" method="POST">
 
                                     @csrf
 
@@ -203,10 +189,9 @@
                         </div>
 
 
-                        {{-- Delete from WatchList --}}
                         <div class="detail-action">
 
-                            <form action="{{ route('watchlist.remove', $todo) }}" method="POST"
+                            <form action="{{ route('watchlist.remove', $movie) }}" method="POST"
                                 onsubmit="return confirm('Remove this movie from your WatchList?')">
 
                                 @csrf

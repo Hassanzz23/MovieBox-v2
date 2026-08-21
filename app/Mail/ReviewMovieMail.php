@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Todo;
+use App\Models\Movie;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,17 +12,17 @@ class ReviewMovieMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public Todo $todo;
+    public Movie $movie;
 
-    public function __construct(Todo $todo)
+    public function __construct(Movie $movie)
     {
-        $this->todo = $todo;
+        $this->movie = $movie;
     }
 
     public function build()
     {
         return $this
-            ->subject('What did you think about ' . $this->todo->title . '?')
+            ->subject('What did you think about ' . $this->movie->title . '?')
             ->view('emails.review-movie');
     }
 }

@@ -45,19 +45,19 @@ Route::post('/watchlist', [WatchlistController::class, 'store'])
     ->name('watchlist.store')
     ->middleware('auth');
 
-Route::put('/watchlist/{todo}/watched', [WatchlistController::class, 'watched'])
+Route::put('/watchlist/{movie}/watched', [WatchlistController::class, 'watched'])
     ->name('watchlist.watched')
     ->middleware('auth');
 
-Route::put('/watchlist/{todo}/rating', [WatchlistController::class, 'rate'])
+Route::put('/watchlist/{movie}/rating', [WatchlistController::class, 'rate'])
     ->name('watchlist.rate')
     ->middleware('auth');
 
-Route::delete('/watchlist/{todo}', [WatchlistController::class, 'remove'])
+Route::delete('/watchlist/{movie}', [WatchlistController::class, 'remove'])
     ->name('watchlist.remove')
     ->middleware('auth');
 
-Route::get('/watchlist/{todo}', [WatchlistController::class, 'show'])
+Route::get('/watchlist/{movie}', [WatchlistController::class, 'show'])
     ->name('watchlist.show')
     ->middleware('auth');
 
@@ -77,10 +77,10 @@ Route::get('/favorites', [FavoriteController::class, 'index'])
     ->name('favorites.index')
     ->middleware('auth');
 
-Route::post('/favorites/{todo}', [FavoriteController::class, 'add'])
+Route::post('/favorites/{movie}', [FavoriteController::class, 'add'])
     ->name('favorites.add')
     ->middleware('auth');
 
-Route::delete('/favorites/{todo}', [FavoriteController::class, 'remove'])
+Route::delete('/favorites/{movie}', [FavoriteController::class, 'remove'])
     ->name('favorites.remove')
     ->middleware('auth');

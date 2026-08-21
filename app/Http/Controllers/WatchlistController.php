@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\HomeMovie;
-use App\Models\Todo;
+use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -13,18 +13,18 @@ class WatchlistController extends Controller
 {
     public function index()
     {
-        $todos = Todo::with('category')
+        $movies = Movie::with('category')
             ->where('user_id', auth()->id())
             ->paginate(6);
 
-        return view('watchlist.index', compact('todos'));
+        return view('watchlist.index', compact('movies'));
     }
 
     public function add($homeMovie)
     {
         $homeMovie = HomeMovie::findOrFail($homeMovie);
 
-        $exists = Todo::where('user_id', auth()->id())
+        $exists = Movie::where('user_id', auth()->id())
             ->where('home_movie_id', $homeMovie->id)
             ->exists();
 
@@ -34,7 +34,7 @@ class WatchlistController extends Controller
                 ->with('info', 'This movie is already in your WatchList.');
         }
 
-        Todo::create([
+        Movie::create([
             'user_id' => auth()->id(),
             'home_movie_id' => $homeMovie->id,
             'title' => $homeMovie->title,
@@ -51,11 +51,11 @@ class WatchlistController extends Controller
             ->with('success', 'Added to WatchList.');
     }
 
-    public function remove(Todo $todo)
+    public function remove(Movie $movie)
     {
-        $this->authorizeTodo($todo);
+        $this->authorizeMovie($movie);
 
-        $todo->delete();
+        $movie->delete();
 
         return redirect()
             ->route('watchlist.index')
@@ -74,7 +74,7 @@ class WatchlistController extends Controller
             'type' => 'required|in:movie,series,episode',
         ]);
 
-        $exists = Todo::where('user_id', auth()->id())
+        $exists = Movie::where('user_id', auth()->id())
             ->where('imdb_id', $validated['imdb_id'])
             ->exists();
 
@@ -101,7 +101,7 @@ class WatchlistController extends Controller
             $validated['poster_url'] ?? null
         );
 
-        Todo::create([
+        Movie::create([
             'user_id' => auth()->id(),
             'imdb_id' => $validated['imdb_id'],
             'title' => $validated['title'],
@@ -118,11 +118,11 @@ class WatchlistController extends Controller
             ->with('success', 'Added to WatchList.');
     }
 
-    public function watched(Todo $todo)
+    public function watched(Movie $movie)
     {
-        $this->authorizeTodo($todo);
+        $this->authorizeMovie($movie);
 
-        $todo->update([
+        $movie->update([
             'status' => true,
         ]);
 
@@ -131,15 +131,15 @@ class WatchlistController extends Controller
             ->with('success', 'Marked as watched.');
     }
 
-    public function rate(Request $request, Todo $todo)
+    public function rate(Request $request, Movie $movie)
     {
-        $this->authorizeTodo($todo);
+        $this->authorizeMovie($movie);
 
         $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:10',
         ]);
 
-        $todo->update([
+        $movie->update([
             'rating' => $validated['rating'],
         ]);
 
@@ -176,11 +176,11 @@ class WatchlistController extends Controller
         return view('watchlist.omdb-show', compact('movie'));
     }
 
-    public function show(Todo $todo)
+    public function show(Movie $movie)
     {
-        $this->authorizeTodo($todo);
+        $this->authorizeMovie($movie);
 
-        return view('watchlist.detail', compact('todo'));
+        return view('watchlist.detail', compact('movie'));
     }
 
     public function search(Request $request)
@@ -245,8 +245,8 @@ class WatchlistController extends Controller
         }
     }
 
-    private function authorizeTodo(Todo $todo): void
+    private function authorizeMovie(Movie $movie): void
     {
-        abort_if($todo->user_id !== auth()->id(), 403);
+        abort_if($movie->user_id !== auth()->id(), 403);
     }
 }

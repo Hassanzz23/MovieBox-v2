@@ -4,7 +4,6 @@
 
     @include('profile.nav')
 
-    {{-- Page Header --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
@@ -25,7 +24,6 @@
     </div>
 
 
-    {{-- Error Message --}}
     @if (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -33,7 +31,6 @@
     @endif
 
 
-    {{-- Results --}}
     @if (count($results))
         <div class="row">
 
@@ -47,7 +44,6 @@
 
                         <div class="card h-100 shadow-sm rounded-0">
 
-                            {{-- Poster --}}
                             @if (!empty($result['Poster']) && $result['Poster'] !== 'N/A')
                                 <img src="{{ $result['Poster'] }}" class="card-img-top rounded-0"
                                     alt="{{ $result['Title'] }}" style="height: 360px; object-fit: cover;">
@@ -61,7 +57,6 @@
                             @endif
 
 
-                            {{-- Information --}}
                             <div class="card-body">
 
                                 <div class="movie-card-info">
@@ -115,4 +110,3 @@
     @endif
 
 @endsection
-        

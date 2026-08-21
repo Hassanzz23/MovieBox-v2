@@ -13,10 +13,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        /* =========================
-           General
-        ========================= */
-
         body {
             transition:
                 background-color 0.25s ease,
@@ -24,9 +20,7 @@
         }
 
 
-        /* =========================
-           Dark Mode
-        ========================= */
+
 
         [data-bs-theme="dark"] body {
             background-color: #121212;
@@ -62,9 +56,7 @@
         }
 
 
-        /* =========================
-           Cards
-        ========================= */
+
 
         [data-bs-theme="dark"] .card {
             background-color: #1b1b1b;
@@ -80,9 +72,7 @@
         }
 
 
-        /* =========================
-           Forms
-        ========================= */
+
 
         [data-bs-theme="dark"] .form-control,
         [data-bs-theme="dark"] .form-select {
@@ -97,9 +87,7 @@
         }
 
 
-        /* =========================
-           Buttons
-        ========================= */
+
 
         [data-bs-theme="dark"] .btn-outline-secondary {
             color: #ddd;
@@ -113,18 +101,14 @@
         }
 
 
-        /* =========================
-           Alerts
-        ========================= */
+
 
         [data-bs-theme="dark"] .alert {
             border-color: #333;
         }
 
 
-        /* =========================
-           Navbar Links
-        ========================= */
+
 
         .navbar .nav-link {
             position: relative;
@@ -158,9 +142,7 @@
         }
 
 
-        /* =========================
-           Username Box
-        ========================= */
+
 
         .username-link {
             margin-left: 6px;
@@ -193,7 +175,6 @@
         }
 
 
-        /* Light Mode Username */
 
         [data-bs-theme="light"] .username-link {
             background-color: #212529;
@@ -201,7 +182,6 @@
         }
 
 
-        /* Dark Mode Username */
 
         [data-bs-theme="dark"] .username-link {
             background-color: #f1f1f1;
@@ -214,9 +194,7 @@
         }
 
 
-        /* =========================
-           Theme Toggle
-        ========================= */
+
 
         .theme-toggle {
 
@@ -263,7 +241,6 @@
         }
 
 
-        /* Light Mode */
 
         .theme-icon.moon {
             opacity: 1;
@@ -275,7 +252,6 @@
         }
 
 
-        /* Dark Mode */
 
         [data-bs-theme="dark"] .theme-toggle {
 
@@ -295,9 +271,7 @@
         }
 
 
-        /* =========================
-           Smooth Theme Transition
-        ========================= */
+
 
         html {
             transition: background-color 0.25s ease;
@@ -315,7 +289,6 @@
         <div class="container-fluid">
 
 
-            {{-- Logo --}}
 
             <a class="navbar-brand" href="{{ route('home') }}">
 
@@ -324,7 +297,6 @@
             </a>
 
 
-            {{-- Mobile Menu Button --}}
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -334,7 +306,6 @@
             </button>
 
 
-            {{-- Navigation --}}
 
             <div class="collapse navbar-collapse" id="navbarNav">
 
@@ -342,7 +313,6 @@
                 <ul class="navbar-nav">
 
 
-                    {{-- Home --}}
 
                     <li class="nav-item">
 
@@ -358,7 +328,6 @@
                     @auth
 
 
-                        {{-- Username / Profile --}}
 
                         <li class="nav-item">
 
@@ -378,7 +347,6 @@
                     @guest
 
 
-                        {{-- Login --}}
 
                         <li class="nav-item">
 
@@ -392,7 +360,6 @@
                         </li>
 
 
-                        {{-- Sign Up --}}
 
                         <li class="nav-item">
 
@@ -412,14 +379,12 @@
                 </ul>
 
 
-                {{-- Right Side --}}
 
                 <div class="ms-auto d-flex align-items-center gap-3">
 
 
                     @auth
 
-                        {{-- Logout --}}
 
                         <a href="{{ route('logout') }}" class="nav-link">
 
@@ -430,7 +395,6 @@
                     @endauth
 
 
-                    {{-- Theme Toggle --}}
 
                     <button id="themeToggle" type="button" class="theme-toggle" aria-label="Toggle theme"
                         title="Toggle theme">

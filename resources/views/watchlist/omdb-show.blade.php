@@ -44,7 +44,6 @@
 
         <div class="row g-0">
 
-            {{-- Poster --}}
             <div class="col-12 col-md-4">
 
                 @if (!empty($movie['Poster']) && $movie['Poster'] !== 'N/A')
@@ -55,7 +54,6 @@
             </div>
 
 
-            {{-- Information --}}
             <div class="col-12 col-md-8">
 
                 <div class="card-body p-4">
@@ -87,7 +85,6 @@
                     @endif
 
 
-                    {{-- Add to WatchList --}}
                     <form action="{{ route('watchlist.store') }}" method="POST">
 
                         @csrf

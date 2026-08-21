@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Rate {{ $todo->title }}</title>
+    <title>Rate {{ $movie->title }}</title>
 </head>
 
 <body style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 30px;">
 
-    <div style="
+    <div
+        style="
         max-width: 600px;
         margin: auto;
         background: white;
@@ -16,11 +18,11 @@
     ">
 
         <h2>
-            🎬 What did you think about {{ $todo->title }}?
+            🎬 What did you think about {{ $movie->title }}?
         </h2>
 
         <p>
-            You marked <strong>{{ $todo->title }}</strong> as watched.
+            You marked <strong>{{ $movie->title }}</strong> as watched.
         </p>
 
         <p>
@@ -31,8 +33,8 @@
             You haven't rated this movie yet.
         </p>
 
-        <a href="{{ route('watchlist.show', $todo) }}"
-           style="
+        <a href="{{ route('watchlist.show', $movie) }}"
+            style="
                 display: inline-block;
                 background: #212529;
                 color: white;
@@ -50,4 +52,5 @@
     </div>
 
 </body>
+
 </html>

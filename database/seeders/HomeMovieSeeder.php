@@ -160,7 +160,7 @@ class HomeMovieSeeder extends Seeder
             'description' => 'A race car learns about friendship and life in a small town.',
         ]);
 
-        HomeMovie::create([ 
+        HomeMovie::create([
             'image' => 'inside-out.jpg',
             'title' => 'Inside Out',
             'year' => 2015,
@@ -176,7 +176,7 @@ class HomeMovieSeeder extends Seeder
             'genre' => 'Animation, Comedy',
             'category_id' => $animation->id,
             'description' => 'Two young monsters discover that becoming a scarer is not as simple as they expected.',
-]);
+        ]);
 
         HomeMovie::create([
             'image' => 'attack-on-titan.jpg',

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    
+
     @include('profile.nav')
 
     <style>
@@ -63,7 +63,6 @@
     </style>
 
 
-    {{-- Page Header --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
@@ -77,13 +76,11 @@
         </div>
 
 
-        {{-- Search --}}
         <form action="{{ route('watchlist.search') }}" method="GET" class="d-flex">
 
             <input type="text" name="query" class="form-control" placeholder="Search movies..." style="width: 280px;"
                 required>
 
-            {{-- Keep current WatchList page --}}
             <input type="hidden" name="page" value="{{ request('page', 1) }}">
 
             <button type="submit" class="btn btn-dark ms-2">
@@ -95,7 +92,6 @@
     </div>
 
 
-    {{-- Success Message --}}
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -103,7 +99,6 @@
     @endif
 
 
-    {{-- Info Message --}}
     @if (session('info'))
         <div class="alert alert-info">
             {{ session('info') }}
@@ -111,47 +106,42 @@
     @endif
 
 
-    @if ($todos->count())
+    @if ($movies->count())
         <div class="row">
 
-            @foreach ($todos as $todo)
+            @foreach ($movies as $movie)
                 <div class="col-12 col-sm-6 col-lg-4 mb-4">
 
                     <div class="card watchlist-card shadow-sm rounded-0">
 
 
-                        {{-- Movie --}}
-                        <a href="{{ route('watchlist.show', $todo) }}"
+                        <a href="{{ route('watchlist.show', $movie) }}"
                             class="text-decoration-none text-dark d-flex flex-column flex-grow-1">
 
-                            {{-- Poster --}}
-                            @if ($todo->image)
-                                <img src="{{ asset('storage/images/' . $todo->image) }}"
-                                    class="watchlist-card-poster rounded-0" alt="{{ $todo->title }}">
+                            @if ($movie->image)
+                                <img src="{{ asset('storage/images/' . $movie->image) }}"
+                                    class="watchlist-card-poster rounded-0" alt="{{ $movie->title }}">
                             @endif
 
 
-                            {{-- Movie Information --}}
                             <div class="card-body watchlist-card-info">
 
-                                {{-- Title --}}
                                 <h5 class="watchlist-card-title fw-bold">
 
-                                    {{ $todo->title }}
+                                    {{ $movie->title }}
 
-                                    @if ($todo->year)
+                                    @if ($movie->year)
                                         <span class="text-muted fw-normal">
-                                            ({{ $todo->year }})
+                                            ({{ $movie->year }})
                                         </span>
                                     @endif
 
                                 </h5>
 
 
-                                {{-- Genre --}}
-                                @if ($todo->genre)
+                                @if ($movie->genre)
                                     <p class="watchlist-card-genre text-muted mt-2">
-                                        {{ $todo->genre }}
+                                        {{ $movie->genre }}
                                     </p>
                                 @endif
 
@@ -160,27 +150,23 @@
                         </a>
 
 
-                        {{-- Actions --}}
                         <div class="card-body pt-0 watchlist-card-actions">
 
 
-                            @if ($todo->status)
-                                {{-- Watched --}}
+                            @if ($movie->status)
                                 <span class="badge bg-success">
                                     Watched
                                 </span>
 
 
-                                {{-- Rating --}}
-                                @if ($todo->rating)
+                                @if ($movie->rating)
                                     <span class="badge bg-dark">
-                                        {{ $todo->rating }}/10
+                                        {{ $movie->rating }}/10
                                     </span>
                                 @else
-                                    {{-- Rating Form --}}
                                     <div class="watchlist-rating">
 
-                                        <form action="{{ route('watchlist.rate', $todo) }}" method="POST">
+                                        <form action="{{ route('watchlist.rate', $movie) }}" method="POST">
 
                                             @csrf
                                             @method('PUT')
@@ -210,8 +196,7 @@
                                     </div>
                                 @endif
                             @else
-                                {{-- Mark as Watched --}}
-                                <form action="{{ route('watchlist.watched', $todo) }}" method="POST">
+                                <form action="{{ route('watchlist.watched', $movie) }}" method="POST">
 
                                     @csrf
                                     @method('PUT')
@@ -236,7 +221,7 @@
 
         <div class="mt-3">
 
-            {{ $todos->links() }}
+            {{ $movies->links() }}
 
         </div>
     @else
@@ -252,6 +237,6 @@
 
         </div>
     @endif
-    
+
 
 @endsection
