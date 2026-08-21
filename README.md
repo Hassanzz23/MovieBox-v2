@@ -8,6 +8,7 @@ MovieBox v2 is a Laravel-based movie management application that provides a comp
 
 - **Sign Up** — Create a new user account.
 - **Log In** — Securely authenticate users.
+- **Change Password** — Change the account password from the user profile.
 - **Forgot Password** — Request a password reset.
 - **Password Reset Email** — Receive a password reset email.
 - **Log Out** — Securely log out from the application.
@@ -58,23 +59,23 @@ The **frontend/UI was developed with the assistance of AI tools**.
 
 ### 1. Clone the repository
 
-```bash
+bash
 git clone https://github.com/Hassanzz23/MovieBox-v2.git
-```
+
 
 Navigate to the project directory:
 
-```bash
+bash
 cd MovieBox-v2
-```
+
 
 ### 2. Install PHP dependencies
 
 Make sure you have PHP and Composer installed, then run:
 
-```bash
+bash
 composer install
-```
+
 
 ### 3. Create the environment file
 
@@ -84,36 +85,36 @@ On Windows, you can simply copy `.env.example` and rename the copy to `.env`.
 
 ### 4. Generate the application key
 
-```bash
+bash
 php artisan key:generate
-```
+
 
 ### 5. Configure the database
 
 Open the `.env` file and configure your MySQL database:
 
-```env
+env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
-```
+
 
 Create the database in MySQL before running the migrations.
 
 ### 6. Run migrations
 
-```bash
+bash
 php artisan migrate
-```
+
 
 If the project contains seeders and you want to populate the database with sample data:
 
-```bash
+bash
 php artisan db:seed
-```
+
 
 ### 7. Configure email
 
@@ -121,7 +122,7 @@ MovieBox v2 uses email functionality for features such as password reset and wel
 
 Configure your mail settings in `.env`:
 
-```env
+env
 MAIL_MAILER=smtp
 MAIL_HOST=your_smtp_host
 MAIL_PORT=587
@@ -130,7 +131,7 @@ MAIL_PASSWORD=your_password
 MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=your_email
 MAIL_FROM_NAME="${APP_NAME}"
-```
+
 
 > Never commit your `.env` file or real email credentials to GitHub.
 
@@ -138,15 +139,15 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 Start the Laravel development server:
 
-```bash
+bash
 php artisan serve
-```
+
 
 Then open:
 
-```text
+text
 http://127.0.0.1:8000
-```
+
 
 ## Usage
 
@@ -170,7 +171,7 @@ After starting the application, users can:
 
 The project follows the standard Laravel application structure:
 
-```text
+text
 MovieBox-v2/
 ├── app/
 ├── bootstrap/
@@ -187,7 +188,7 @@ MovieBox-v2/
 ├── composer.lock
 ├── package.json
 └── README.md
-```
+
 
 ## Author
 

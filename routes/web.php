@@ -61,6 +61,14 @@ Route::get('/watchlist/{movie}', [WatchlistController::class, 'show'])
     ->name('watchlist.show')
     ->middleware('auth');
 
+Route::get('/profile/change-password', [ProfileController::class, 'changePassword'])
+    ->name('profile.change-password')
+    ->middleware('auth');
+
+Route::put('/profile/change-password', [ProfileController::class, 'updatePassword'])
+    ->name('profile.update-password')
+    ->middleware('auth');
+
 Route::get('/forget-password', [ForgetPasswordController::class, 'forgetPassword'])
     ->name('forget.password');
 
