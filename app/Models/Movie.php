@@ -23,6 +23,7 @@ class Movie extends Model
         'rating',
         'category_id',
         'home_movie_id',
+        'type',
     ];
 
     public function category()
@@ -39,9 +40,9 @@ class Movie extends Model
     {
         return $this->belongsTo(HomeMovie::class);
     }
-    public function favorite()
+    public function favorites()
     {
-        return $this->hasOne(Favorite::class);
+        return $this->hasMany(Favorite::class);
     }
 
     protected static function booted(): void

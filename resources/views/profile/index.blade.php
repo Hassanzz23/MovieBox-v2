@@ -90,7 +90,7 @@
                     <div class="border p-3 h-100">
 
                         <div class="text-muted mb-1">
-                            ❤️ Movies in Favorites
+                            ⭐️ Movies in Favorites
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">

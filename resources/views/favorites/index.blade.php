@@ -19,11 +19,12 @@
         }
 
         .favorite-card-info {
-            flex: 1;
+            height: 125px;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 6px;
+            padding: 16px;
         }
 
         .favorite-card-title {
@@ -37,21 +38,33 @@
 
         .favorite-card-status {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             gap: 8px;
-            margin-top: 6px;
+            margin-top: 8px;
         }
 
         .favorite-card-actions {
+            min-height: 105px;
             margin-top: auto;
-            min-height: 58px;
+            padding: 0 16px 16px;
             display: flex;
             align-items: flex-end;
+            justify-content: flex-end;
         }
 
         .favorite-card-actions form {
             margin: 0;
+        }
+
+        .favorite-remove-btn {
+            min-height: 36px;
+            transition: 0.2s ease;
+        }
+
+        .favorite-remove-btn:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: #fff;
         }
     </style>
 
@@ -95,24 +108,17 @@
 
             @foreach ($favorites as $favorite)
                 @php
-                    $movie = $favorite->todo;
+                    $movie = $favorite->movie;
                 @endphp
+
+                @if (!$movie)
+                    @continue
+                @endif
 
 
                 <div class="col-12 col-sm-6 col-lg-4 mb-4">
 
                     <div class="card favorite-card shadow-sm rounded-0">
-                        @php
-                            $movie = $favorite->movie;
-                        @endphp
-
-                        @if (!$movie)
-                            <p class="text-danger">
-                                Movie not found for Favorite #{{ $favorite->id }}
-                            </p>
-                            @continue
-                        @endif
-
 
                         <a href="{{ route('watchlist.show', $movie) }}"
                             class="text-decoration-none text-dark d-flex flex-column flex-grow-1">
@@ -123,7 +129,7 @@
                             @endif
 
 
-                            <div class="card-body favorite-card-info">
+                            <div class="favorite-card-info">
 
                                 <h5 class="favorite-card-title fw-bold">
 
@@ -139,7 +145,7 @@
 
 
                                 @if ($movie->genre)
-                                    <p class="favorite-card-genre text-muted">
+                                    <p class="favorite-card-genre text-muted mt-2">
                                         {{ $movie->genre }}
                                     </p>
                                 @endif
@@ -167,7 +173,7 @@
                         </a>
 
 
-                        <div class="card-body pt-0 favorite-card-actions">
+                        <div class="favorite-card-actions">
 
                             <form action="{{ route('favorites.remove', $movie) }}" method="POST"
                                 onsubmit="return confirm('Remove this movie from your Favorites?')">
@@ -175,8 +181,10 @@
                                 @csrf
                                 @method('DELETE')
 
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                <button type="submit" class="btn btn-outline-danger btn-sm favorite-remove-btn">
+
                                     Remove from Favorites
+
                                 </button>
 
                             </form>

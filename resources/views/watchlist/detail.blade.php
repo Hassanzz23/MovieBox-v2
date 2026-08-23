@@ -4,11 +4,11 @@
 
     <style>
         .detail-card {
-            height: 450px;
+            height: 520px;
             overflow: hidden;
         }
 
-        .detail-card .row {
+        .detail-card>.row {
             height: 100%;
         }
 
@@ -23,28 +23,63 @@
             object-fit: cover;
         }
 
-        .detail-info {
-            display: flex;
-            flex-direction: column;
+        .detail-info-wrapper {
             height: 100%;
         }
 
+        .detail-info {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
         .detail-content {
-            flex: 1;
+            flex: 1 1 auto;
+            min-height: 0;
             overflow-y: auto;
+            padding-right: 8px;
         }
 
         .detail-actions {
-            margin-top: auto;
+            flex-shrink: 0;
             padding-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .detail-action {
-            margin-bottom: 10px;
+            height: 40px;
+            flex-shrink: 0;
         }
 
-        .detail-action:last-child {
-            margin-bottom: 0;
+        .detail-action form {
+            height: 40px;
+            margin: 0;
+        }
+
+        .detail-action button {
+            height: 40px;
+            min-width: 190px;
+        }
+
+        @media (max-width: 767.98px) {
+            .detail-card {
+                height: auto;
+            }
+
+            .detail-card>.row {
+                height: auto;
+            }
+
+            .detail-poster {
+                height: 500px;
+            }
+
+            .detail-info-wrapper {
+                height: 500px;
+            }
         }
     </style>
 
@@ -63,7 +98,6 @@
 
         </h2>
 
-
         <a href="{{ route('watchlist.index') }}" class="btn btn-dark">
             Back
         </a>
@@ -76,6 +110,7 @@
         <div class="row g-0">
 
 
+            {{-- Poster --}}
             <div class="col-12 col-md-4 detail-poster">
 
                 @if ($movie->image)
@@ -85,11 +120,13 @@
             </div>
 
 
-            <div class="col-12 col-md-8">
+            {{-- Information --}}
+            <div class="col-12 col-md-8 detail-info-wrapper">
 
                 <div class="card-body p-4 detail-info">
 
 
+                    {{-- Scrollable content --}}
                     <div class="detail-content">
 
                         <h3 class="fw-bold mb-2">
@@ -126,7 +163,6 @@
                                     Watched
                                 </span>
 
-
                                 @if ($movie->rating)
                                     <span class="badge bg-dark ms-2">
                                         ⭐ {{ $movie->rating }}/10
@@ -139,9 +175,11 @@
                     </div>
 
 
+                    {{-- Fixed actions --}}
                     <div class="detail-actions">
 
 
+                        {{-- Mark as Watched --}}
                         @if (!$movie->status)
                             <div class="detail-action">
 
@@ -160,17 +198,17 @@
                         @endif
 
 
+                        {{-- Favorite --}}
                         <div class="detail-action">
 
-                            @if ($movie->favorite)
-                                <form action="{{ route('favorites.remove', $movie) }}" method="POST"
-                                    onsubmit="return confirm('Remove this movie from your Favorites?')">
+                            @if ($isFavorite)
+                                <form action="{{ route('favorites.remove', $movie) }}" method="POST">
 
                                     @csrf
                                     @method('DELETE')
 
-                                    <button type="submit" class="btn btn-outline-warning">
-                                        ⭐ Remove from Favorites
+                                    <button type="submit" class="btn btn-dark">
+                                        ★ Remove from Favorites
                                     </button>
 
                                 </form>
@@ -180,7 +218,7 @@
                                     @csrf
 
                                     <button type="submit" class="btn btn-success">
-                                        ⭐ Add to Favorites
+                                        ☆ Add to Favorites
                                     </button>
 
                                 </form>
@@ -198,7 +236,9 @@
                                 @method('DELETE')
 
                                 <button type="submit" class="btn btn-outline-danger">
+
                                     Delete from WatchList
+
                                 </button>
 
                             </form>

@@ -5,19 +5,98 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\HomeMovie;
 use App\Models\Movie;
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class WatchlistController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $movies = Movie::with('category')
-            ->where('user_id', auth()->id())
-            ->paginate(6);
+        $filter = $request->get('filter', 'all');
+        $sort = $request->get('sort', 'default');
 
-        return view('watchlist.index', compact('movies'));
+        $query = Movie::with('category')
+            ->where('user_id', auth()->id());
+
+        switch ($filter) {
+
+            case 'watched':
+                $query->where('status', true);
+                break;
+
+            case 'unwatched':
+                $query->where('status', false);
+                break;
+
+            case 'rated':
+                $query->whereNotNull('rating');
+                break;
+
+            case 'not_rated':
+                $query->whereNull('rating');
+                break;
+
+            case 'favorites':
+                $query->whereHas('favorites', function ($favoriteQuery) {
+                    $favoriteQuery->where('user_id', auth()->id());
+                });
+                break;
+        }
+
+        switch ($sort) {
+
+            case 'name_asc':
+                $query->orderBy('title', 'asc');
+                break;
+
+            case 'name_desc':
+                $query->orderBy('title', 'desc');
+                break;
+
+            case 'year_desc':
+                $query->orderBy('year', 'desc');
+                break;
+
+            case 'year_asc':
+                $query->orderBy('year', 'asc');
+                break;
+
+            case 'rating_desc':
+                $query->orderBy('rating', 'desc');
+                break;
+
+            case 'rating_asc':
+                $query->orderBy('rating', 'asc');
+                break;
+
+            case 'newest':
+                $query->latest();
+                break;
+
+            case 'oldest':
+                $query->oldest();
+                break;
+
+            default:
+                $query->oldest();
+                break;
+        }
+
+        $movies = $query->paginate(6)->withQueryString();
+
+        $favorites = Favorite::where('user_id', auth()->id())
+            ->whereIn('movie_id', $movies->pluck('id'))
+            ->pluck('movie_id')
+            ->toArray();
+
+        return view('watchlist.index', compact(
+            'movies',
+            'favorites',
+            'filter',
+            'sort'
+        ));
     }
 
     public function add($homeMovie)
@@ -84,6 +163,29 @@ class WatchlistController extends Controller
                 ->with('info', 'This movie is already in your WatchList.');
         }
 
+        $response = Http::timeout(10)->get(
+            'https://www.omdbapi.com/',
+            [
+                'apikey' => config('services.omdb.key'),
+                'i' => $validated['imdb_id'],
+                'plot' => 'full',
+            ]
+        );
+
+        if (!$response->successful()) {
+            return redirect()
+                ->route('watchlist.index')
+                ->with('error', 'Movie information service is temporarily unavailable.');
+        }
+
+        $omdbMovie = $response->json();
+
+        if (($omdbMovie['Response'] ?? 'False') === 'False') {
+            return redirect()
+                ->route('watchlist.index')
+                ->with('error', 'Movie information not found.');
+        }
+
         $categoryTitle = match ($validated['type']) {
             'movie' => 'Movie',
             'series', 'episode' => 'TV Show',
@@ -97,17 +199,37 @@ class WatchlistController extends Controller
                 ->with('error', 'Movie category not found.');
         }
 
-        $imageName = $this->downloadPoster(
-            $validated['poster_url'] ?? null
-        );
+        $posterUrl = $omdbMovie['Poster'] ?? null;
+
+        if (!$posterUrl || $posterUrl === 'N/A') {
+            return redirect()
+                ->route('watchlist.index')
+                ->with('error', 'Movie poster is not available.');
+        }
+
+        $imageName = $this->downloadPoster($posterUrl);
+
+        if (!$imageName) {
+            return redirect()
+                ->route('watchlist.index')
+                ->with('error', 'Movie poster could not be downloaded.');
+        }
+
+
+        $year = null;
+
+        if (!empty($omdbMovie['Year'])) {
+            preg_match('/^\d{4}/', $omdbMovie['Year'], $matches);
+            $year = $matches[0] ?? null;
+        }
 
         Movie::create([
             'user_id' => auth()->id(),
             'imdb_id' => $validated['imdb_id'],
-            'title' => $validated['title'],
-            'year' => $validated['year'] ?? null,
-            'genre' => $validated['genre'] ?? null,
-            'description' => $validated['description'] ?? null,
+            'title' => $omdbMovie['Title'],
+            'year' => $year,
+            'genre' => $omdbMovie['Genre'] ?? null,
+            'description' => $omdbMovie['Plot'] ?? '',
             'image' => $imageName,
             'status' => false,
             'category_id' => $category->id,
@@ -173,14 +295,26 @@ class WatchlistController extends Controller
                 ->with('error', 'Movie information not found.');
         }
 
-        return view('watchlist.omdb-show', compact('movie'));
+        $alreadyInWatchlist = Movie::where('user_id', auth()->id())
+            ->where('imdb_id', $movie['imdbID'])
+            ->exists();
+
+        return view('watchlist.omdb-show', compact(
+            'movie',
+            'alreadyInWatchlist'
+        ));
     }
+
 
     public function show(Movie $movie)
     {
         $this->authorizeMovie($movie);
 
-        return view('watchlist.detail', compact('movie'));
+        $isFavorite = Favorite::where('user_id', auth()->id())
+            ->where('movie_id', $movie->id)
+            ->exists();
+
+        return view('watchlist.detail', compact('movie', 'isFavorite'));
     }
 
     public function search(Request $request)
@@ -199,7 +333,6 @@ class WatchlistController extends Controller
             ]
         );
 
-
         if (!$response->successful()) {
             return redirect()
                 ->route('watchlist.index')
@@ -216,7 +349,25 @@ class WatchlistController extends Controller
 
         $results = $data['Search'] ?? [];
 
-        return view('watchlist.search', compact('results', 'query'));
+        $imdbIds = collect($results)
+            ->pluck('imdbID')
+            ->filter()
+            ->values();
+
+        $watchlistMovies = Movie::where('user_id', auth()->id())
+            ->whereIn('imdb_id', $imdbIds)
+            ->get()
+            ->keyBy('imdb_id');
+
+        $favoriteMovieIds = Favorite::where('user_id', auth()->id())
+            ->whereIn('movie_id', $watchlistMovies->pluck('id'))
+            ->pluck('movie_id')
+            ->toArray();
+
+        return view(
+            'watchlist.search',
+            compact('results', 'query', 'watchlistMovies', 'favoriteMovieIds')
+        );
     }
 
     private function downloadPoster(?string $posterUrl): ?string

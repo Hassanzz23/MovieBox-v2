@@ -85,33 +85,40 @@
                     @endif
 
 
-                    <form action="{{ route('watchlist.store') }}" method="POST">
+                    @if ($alreadyInWatchlist)
+                        <span class="btn btn-secondary disabled">
+                            Already in WatchList
+                        </span>
+                    @else
+                        <form action="{{ route('watchlist.store') }}" method="POST">
 
-                        @csrf
+                            @csrf
 
-                        <input type="hidden" name="type" value="{{ strtolower($movie['Type'] ?? '') }}">
+                            <input type="hidden" name="type" value="{{ strtolower($movie['Type'] ?? '') }}">
 
-                        <input type="hidden" name="imdb_id" value="{{ $movie['imdbID'] }}">
+                            <input type="hidden" name="imdb_id" value="{{ $movie['imdbID'] }}">
 
-                        <input type="hidden" name="title" value="{{ $movie['Title'] }}">
+                            <input type="hidden" name="title" value="{{ $movie['Title'] }}">
 
-                        <input type="hidden" name="year"
-                            value="{{ is_numeric($movie['Year'] ?? null) ? $movie['Year'] : '' }}">
+                            <input type="hidden" name="year"
+                                value="{{ is_numeric($movie['Year'] ?? null) ? $movie['Year'] : '' }}">
 
-                        <input type="hidden" name="genre"
-                            value="{{ ($movie['Genre'] ?? 'N/A') !== 'N/A' ? $movie['Genre'] : '' }}">
+                            <input type="hidden" name="genre"
+                                value="{{ ($movie['Genre'] ?? 'N/A') !== 'N/A' ? $movie['Genre'] : '' }}">
 
-                        <input type="hidden" name="description"
-                            value="{{ ($movie['Plot'] ?? 'N/A') !== 'N/A' ? $movie['Plot'] : '' }}">
+                            <input type="hidden" name="description"
+                                value="{{ ($movie['Plot'] ?? 'N/A') !== 'N/A' ? $movie['Plot'] : '' }}">
 
-                        <input type="hidden" name="poster_url"
-                            value="{{ ($movie['Poster'] ?? 'N/A') !== 'N/A' ? $movie['Poster'] : '' }}">
+                            <input type="hidden" name="poster_url"
+                                value="{{ ($movie['Poster'] ?? 'N/A') !== 'N/A' ? $movie['Poster'] : '' }}">
 
-                        <button type="submit" class="btn btn-primary">
-                            Add to WatchList
-                        </button>
+                            <button type="submit" class="btn btn-primary">
+                                Add to WatchList
+                            </button>
 
-                    </form>
+                        </form>
+                    @endif
+
 
                 </div>
 

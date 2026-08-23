@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     @include('profile.nav')
 
     <style>
@@ -20,9 +19,12 @@
         }
 
         .watchlist-card-info {
-            flex: 1;
+            height: 125px;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
+            padding: 16px;
         }
 
         .watchlist-card-title {
@@ -35,8 +37,9 @@
         }
 
         .watchlist-card-actions {
+            min-height: 105px;
             margin-top: auto;
-            min-height: 76px;
+            padding: 0 16px 16px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -60,6 +63,78 @@
             gap: 8px;
             margin: 0;
         }
+
+        .watchlist-bottom-actions {
+            width: 100%;
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .watchlist-bottom-actions form {
+            margin: 0;
+        }
+
+        .watchlist-action-btn {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 4px;
+
+            font-size: 20px;
+            line-height: 1;
+
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        /* Favorite */
+
+        .favorite-action {
+            background-color: transparent;
+            border: 1px solid #ffc107;
+            color: #ffc107;
+        }
+
+        .favorite-action:hover {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #212529;
+        }
+
+        .favorite-action.active {
+            background-color: #212529;
+            border-color: #212529;
+            color: #ffc107;
+        }
+
+        .favorite-action.active:hover {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #212529;
+        }
+
+        /* Remove */
+
+        .remove-action {
+            background-color: transparent;
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            font-size: 23px;
+        }
+
+        .remove-action:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: #fff;
+        }
     </style>
 
 
@@ -76,18 +151,109 @@
         </div>
 
 
-        <form action="{{ route('watchlist.search') }}" method="GET" class="d-flex">
+        <div class="d-flex flex-column align-items-end gap-2">
 
-            <input type="text" name="query" class="form-control" placeholder="Search movies..." style="width: 280px;"
-                required>
+            <form action="{{ route('watchlist.search') }}" method="GET" class="d-flex">
 
-            <input type="hidden" name="page" value="{{ request('page', 1) }}">
+                <input type="text" name="query" class="form-control" placeholder="Search movies..." style="width: 280px;"
+                    required>
 
-            <button type="submit" class="btn btn-dark ms-2">
-                Search
-            </button>
+                <button type="submit" class="btn btn-dark ms-2">
+                    Search
+                </button>
 
-        </form>
+            </form>
+
+
+            <form action="{{ route('watchlist.index') }}" method="GET"
+                class="d-flex align-items-center gap-2 flex-wrap justify-content-end">
+
+                <label class="text-muted mb-0">
+                    View:
+                </label>
+
+                <select name="filter" class="form-select form-select-sm" style="width: 150px;">
+
+                    <option value="all" {{ $filter === 'all' ? 'selected' : '' }}>
+                        All
+                    </option>
+
+                    <option value="watched" {{ $filter === 'watched' ? 'selected' : '' }}>
+                        Watched
+                    </option>
+
+                    <option value="unwatched" {{ $filter === 'unwatched' ? 'selected' : '' }}>
+                        Not Watched
+                    </option>
+
+                    <option value="rated" {{ $filter === 'rated' ? 'selected' : '' }}>
+                        Rated
+                    </option>
+
+                    <option value="not_rated" {{ $filter === 'not_rated' ? 'selected' : '' }}>
+                        Not Rated
+                    </option>
+
+                    <option value="favorites" {{ $filter === 'favorites' ? 'selected' : '' }}>
+                        Favorites
+                    </option>
+
+                </select>
+
+
+                <label class="text-muted mb-0">
+                    Sort by:
+                </label>
+
+                <select name="sort" class="form-select form-select-sm" style="width: 175px;">
+
+                    <option value="default" {{ $sort === 'default' ? 'selected' : '' }}>
+                        Default
+                    </option>
+
+                    <option value="name_asc" {{ $sort === 'name_asc' ? 'selected' : '' }}>
+                        Name: A → Z
+                    </option>
+
+                    <option value="name_desc" {{ $sort === 'name_desc' ? 'selected' : '' }}>
+                        Name: Z → A
+                    </option>
+
+                    <option value="year_desc" {{ $sort === 'year_desc' ? 'selected' : '' }}>
+                        Year: Newest → Oldest
+                    </option>
+
+                    <option value="year_asc" {{ $sort === 'year_asc' ? 'selected' : '' }}>
+                        Year: Oldest → Newest
+                    </option>
+
+                    <option value="rating_desc" {{ $sort === 'rating_desc' ? 'selected' : '' }}>
+                        Rating: High → Low
+                    </option>
+
+                    <option value="rating_asc" {{ $sort === 'rating_asc' ? 'selected' : '' }}>
+                        Rating: Low → High
+                    </option>
+
+                    <option value="newest" {{ $sort === 'newest' ? 'selected' : '' }}>
+                        Added: Newest
+                    </option>
+
+                    <option value="oldest" {{ $sort === 'oldest' ? 'selected' : '' }}>
+                        Added: Oldest
+                    </option>
+
+                </select>
+
+
+                <button type="submit" class="btn btn-dark btn-sm">
+                    Go
+                </button>
+
+            </form>
+
+
+        </div>
 
     </div>
 
@@ -114,7 +280,6 @@
 
                     <div class="card watchlist-card shadow-sm rounded-0">
 
-
                         <a href="{{ route('watchlist.show', $movie) }}"
                             class="text-decoration-none text-dark d-flex flex-column flex-grow-1">
 
@@ -124,7 +289,7 @@
                             @endif
 
 
-                            <div class="card-body watchlist-card-info">
+                            <div class="watchlist-card-info">
 
                                 <h5 class="watchlist-card-title fw-bold">
 
@@ -150,8 +315,7 @@
                         </a>
 
 
-                        <div class="card-body pt-0 watchlist-card-actions">
-
+                        <div class="watchlist-card-actions">
 
                             @if ($movie->status)
                                 <span class="badge bg-success">
@@ -188,7 +352,9 @@
 
 
                                             <button type="submit" class="btn btn-sm btn-dark">
+
                                                 Save
+
                                             </button>
 
                                         </form>
@@ -202,12 +368,62 @@
                                     @method('PUT')
 
                                     <button type="submit" class="btn btn-sm btn-warning">
+
                                         Mark as Watched
+
                                     </button>
 
                                 </form>
                             @endif
 
+
+                            <div class="watchlist-bottom-actions">
+
+                                @if (in_array($movie->id, $favorites))
+                                    <form action="{{ route('favorites.remove', $movie) }}" method="POST">
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="watchlist-action-btn favorite-action active"
+                                            title="Remove from Favorites">
+
+                                            ★
+
+                                        </button>
+
+                                    </form>
+                                @else
+                                    <form action="{{ route('favorites.add', $movie) }}" method="POST">
+
+                                        @csrf
+
+                                        <button type="submit" class="watchlist-action-btn favorite-action"
+                                            title="Add to Favorites">
+
+                                            ☆
+
+                                        </button>
+
+                                    </form>
+                                @endif
+
+
+                                <form action="{{ route('watchlist.remove', $movie) }}" method="POST">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="watchlist-action-btn remove-action"
+                                        title="Remove from WatchList">
+
+                                        −
+
+                                    </button>
+
+                                </form>
+
+                            </div>
 
                         </div>
 
@@ -220,9 +436,7 @@
 
 
         <div class="mt-3">
-
             {{ $movies->links() }}
-
         </div>
     @else
         <div class="text-center py-5">
@@ -237,6 +451,5 @@
 
         </div>
     @endif
-
 
 @endsection

@@ -332,7 +332,7 @@
                         <li class="nav-item">
 
                             <a href="{{ route('profile.index') }}"
-                                class="nav-link username-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">
+                                class="nav-link username-link {{ request()->routeIs('profile.*') || request()->routeIs('watchlist.*') || request()->routeIs('favorites.*') ? 'active' : '' }}">
 
                                 {{ auth()->user()->name }}
 
