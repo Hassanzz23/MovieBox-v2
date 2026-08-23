@@ -53,7 +53,11 @@ class HomeController extends Controller
 
         if (auth()->check()) {
             $inWatchlist = Movie::where('user_id', auth()->id())
-                ->where('home_movie_id', $homeMovie->id)
+                ->where(function ($query) use ($homeMovie) {
+
+                    $query->where('home_movie_id', $homeMovie->id)
+                        ->orWhere('imdb_id', $homeMovie->imdb_id);
+                })
                 ->exists();
         }
 

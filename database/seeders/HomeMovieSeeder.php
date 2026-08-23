@@ -5,12 +5,15 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\HomeMovie;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class HomeMovieSeeder extends Seeder
 {
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         HomeMovie::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         $movie = Category::where('title', 'Movie')->first();
         $tvShow = Category::where('title', 'TV Show')->first();
@@ -20,6 +23,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'interstellar.jpg',
             'title' => 'Interstellar',
+            'imdb_id' => 'tt0816692',
             'year' => 2014,
             'genre' => 'Sci-Fi, Drama',
             'category_id' => $movie->id,
@@ -29,6 +33,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'inception.jpg',
             'title' => 'Inception',
+            'imdb_id' => 'tt1375666',
             'year' => 2010,
             'genre' => 'Action, Sci-Fi',
             'category_id' => $movie->id,
@@ -38,6 +43,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'dark-knight.jpg',
             'title' => 'The Dark Knight',
+            'imdb_id' => 'tt0468569',
             'year' => 2008,
             'genre' => 'Action, Crime',
             'category_id' => $movie->id,
@@ -47,6 +53,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'forrest-gump.jpg',
             'title' => 'Forrest Gump',
+            'imdb_id' => 'tt0109830',
             'year' => 1994,
             'genre' => 'Drama, Romance',
             'category_id' => $movie->id,
@@ -56,6 +63,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'the-odyssey.jpg',
             'title' => 'The Odyssey',
+            'imdb_id' => 'tt3480822',
             'year' => 2026,
             'genre' => 'Adventure, Drama, Fantasy',
             'category_id' => $movie->id,
@@ -65,6 +73,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'spider-man-brand-new-day.jpg',
             'title' => 'Spider-Man: Brand New Day',
+            'imdb_id' => 'tt22084616',
             'year' => 2026,
             'genre' => 'Action, Adventure, Superhero',
             'category_id' => $movie->id,
@@ -74,6 +83,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'breaking-bad.jpg',
             'title' => 'Breaking Bad',
+            'imdb_id' => 'tt0903747',
             'year' => 2008,
             'genre' => 'Crime, Drama',
             'category_id' => $tvShow->id,
@@ -83,6 +93,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'game-of-thrones.jpg',
             'title' => 'Game of Thrones',
+            'imdb_id' => 'tt0944947',
             'year' => 2011,
             'genre' => 'Drama, Fantasy',
             'category_id' => $tvShow->id,
@@ -92,6 +103,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'stranger-things.jpg',
             'title' => 'Stranger Things',
+            'imdb_id' => 'tt4574334',
             'year' => 2016,
             'genre' => 'Drama, Fantasy, Horror',
             'category_id' => $tvShow->id,
@@ -101,14 +113,17 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'friends.jpg',
             'title' => 'Friends',
+            'imdb_id' => 'tt0108778',
             'year' => 1994,
             'genre' => 'Comedy, Romance',
             'category_id' => $tvShow->id,
             'description' => 'Six friends experience life, friendship and relationships together.',
         ]);
+
         HomeMovie::create([
             'image' => 'dark.jpg',
             'title' => 'Dark',
+            'imdb_id' => 'tt5753856',
             'year' => 2017,
             'genre' => 'Drama, Mystery, Sci-Fi',
             'category_id' => $tvShow->id,
@@ -118,6 +133,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'the-last-of-us.jpg',
             'title' => 'The Last of Us',
+            'imdb_id' => 'tt3581920',
             'year' => 2023,
             'genre' => 'Drama, Action',
             'category_id' => $tvShow->id,
@@ -127,6 +143,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'toy-story.jpg',
             'title' => 'Toy Story',
+            'imdb_id' => 'tt0114709',
             'year' => 1995,
             'genre' => 'Animation, Comedy',
             'category_id' => $animation->id,
@@ -136,6 +153,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'wall-e.jpg',
             'title' => 'WALL-E',
+            'imdb_id' => 'tt0910970',
             'year' => 2008,
             'genre' => 'Animation, Sci-Fi',
             'category_id' => $animation->id,
@@ -145,6 +163,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'coco.jpg',
             'title' => 'Coco',
+            'imdb_id' => 'tt2380307',
             'year' => 2017,
             'genre' => 'Animation, Fantasy',
             'category_id' => $animation->id,
@@ -154,6 +173,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'cars.jpg',
             'title' => 'Cars',
+            'imdb_id' => 'tt0317219',
             'year' => 2006,
             'genre' => 'Animation, Comedy, Adventure',
             'category_id' => $animation->id,
@@ -163,6 +183,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'inside-out.jpg',
             'title' => 'Inside Out',
+            'imdb_id' => 'tt2096673',
             'year' => 2015,
             'genre' => 'Animation, Adventure, Comedy',
             'category_id' => $animation->id,
@@ -172,6 +193,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'monsters-university.jpg',
             'title' => 'Monsters University',
+            'imdb_id' => 'tt1453405',
             'year' => 2013,
             'genre' => 'Animation, Comedy',
             'category_id' => $animation->id,
@@ -181,6 +203,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'attack-on-titan.jpg',
             'title' => 'Attack on Titan',
+            'imdb_id' => 'tt2560140',
             'year' => 2013,
             'genre' => 'Action, Drama, Fantasy',
             'category_id' => $anime->id,
@@ -190,6 +213,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'death-note.jpg',
             'title' => 'Death Note',
+            'imdb_id' => 'tt0877057',
             'year' => 2006,
             'genre' => 'Mystery, Thriller, Supernatural',
             'category_id' => $anime->id,
@@ -199,6 +223,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'a-silent-voice.jpg',
             'title' => 'A Silent Voice',
+            'imdb_id' => 'tt5323662',
             'year' => 2016,
             'genre' => 'Anime, Drama, Romance',
             'category_id' => $anime->id,
@@ -208,6 +233,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'i-want-to-eat-your-pancreas.jpg',
             'title' => 'I Want to Eat Your Pancreas',
+            'imdb_id' => 'tt7236034',
             'year' => 2018,
             'genre' => 'Anime, Drama, Romance',
             'category_id' => $anime->id,
@@ -217,6 +243,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'haikyu.jpg',
             'title' => 'Haikyu!!',
+            'imdb_id' => 'tt3398540',
             'year' => 2014,
             'genre' => 'Anime, Sports, Comedy',
             'category_id' => $anime->id,
@@ -226,6 +253,7 @@ class HomeMovieSeeder extends Seeder
         HomeMovie::create([
             'image' => 'one-piece.jpg',
             'title' => 'One Piece',
+            'imdb_id' => 'tt0388629',
             'year' => 1999,
             'genre' => 'Action, Adventure, Fantasy',
             'category_id' => $anime->id,

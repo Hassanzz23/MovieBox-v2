@@ -104,21 +104,36 @@ class WatchlistController extends Controller
         $homeMovie = HomeMovie::findOrFail($homeMovie);
 
         $exists = Movie::where('user_id', auth()->id())
-            ->where('home_movie_id', $homeMovie->id)
+            ->where(function ($query) use ($homeMovie) {
+
+                $query->where('home_movie_id', $homeMovie->id);
+
+                if (!empty($homeMovie->imdb_id)) {
+                    $query->orWhere('imdb_id', $homeMovie->imdb_id);
+                }
+            })
             ->exists();
 
         if ($exists) {
             return redirect()
-                ->route('watchlist.index')
+                ->back()
                 ->with('info', 'This movie is already in your WatchList.');
+        }
+
+        $year = null;
+
+        if (!empty($homeMovie->year)) {
+            preg_match('/^\d{4}/', $homeMovie->year, $matches);
+            $year = $matches[0] ?? null;
         }
 
         Movie::create([
             'user_id' => auth()->id(),
             'home_movie_id' => $homeMovie->id,
+            'imdb_id' => $homeMovie->imdb_id,
             'title' => $homeMovie->title,
             'image' => $homeMovie->image,
-            'year' => $homeMovie->year,
+            'year' => $year,
             'description' => $homeMovie->description,
             'genre' => $homeMovie->genre,
             'category_id' => $homeMovie->category_id,
@@ -180,6 +195,9 @@ class WatchlistController extends Controller
 
         $omdbMovie = $response->json();
 
+        $homeMovie = HomeMovie::where('title', $omdbMovie['Title'] ?? '')
+            ->first();
+
         if (($omdbMovie['Response'] ?? 'False') === 'False') {
             return redirect()
                 ->route('watchlist.index')
@@ -223,6 +241,9 @@ class WatchlistController extends Controller
             $year = $matches[0] ?? null;
         }
 
+        $homeMovie = HomeMovie::where('imdb_id', $omdbMovie['imdbID'] ?? $validated['imdb_id'])
+            ->first();
+
         Movie::create([
             'user_id' => auth()->id(),
             'imdb_id' => $validated['imdb_id'],
@@ -233,6 +254,7 @@ class WatchlistController extends Controller
             'image' => $imageName,
             'status' => false,
             'category_id' => $category->id,
+            'home_movie_id' => $homeMovie?->id,
         ]);
 
         return redirect()
