@@ -31,15 +31,29 @@ class AuthController extends Controller
         ]);
 
         if (!$user) {
-            return redirect()->back()->with('error', 'Registration failed, try again');
+            return redirect()->back()->with(
+                'error',
+                'Registration failed, try again'
+            );
         }
+
         Mail::to($user->email)->queue(new WelcomeMail($user));
-        return redirect()->route('home')->with('success', 'Registration success, login to access the app');
+
+        return redirect()
+            ->route('home')
+            ->with(
+                'success',
+                'Registration success, login to access the app'
+            );
     }
 
     public function login()
     {
         if (auth()->check()) {
+            if (auth()->user()->is_admin) {
+                return redirect()->route('admin');
+            }
+
             return redirect()->route('home');
         }
 
@@ -54,15 +68,26 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('email', $request->email)->first();
+
         if (!$user) {
-            return redirect()->back()->with(['error' => 'User with this email not found']);
+            return redirect()->back()->with([
+                'error' => 'User with this email not found'
+            ]);
         }
 
         if (!Hash::check($request->password, $user->password)) {
-            return redirect()->back()->with('error', 'Password is incorrect');
+            return redirect()->back()->with(
+                'error',
+                'Password is incorrect'
+            );
         }
 
         Auth::login($user);
+
+        if ($user->is_admin) {
+            return redirect()->route('admin');
+        }
+
         return redirect()->route('home');
     }
 

@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WatchlistController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\Admin\HomeMovieController;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -100,3 +102,24 @@ Route::post('/favorites/{movie}', [FavoriteController::class, 'add'])
 Route::delete('/favorites/{movie}', [FavoriteController::class, 'remove'])
     ->name('favorites.remove')
     ->middleware('auth');
+
+
+Route::get('/admin', function () {
+    return view('admin.home.index');
+})->middleware(['auth', 'admin'])->name('admin');
+
+Route::prefix('admin')
+    ->middleware(['auth', 'admin'])
+    ->group(function () {
+
+        Route::get('/', function () {
+            return view('admin.home.index');
+        })->name('admin');
+
+
+        Route::resource(
+            'home-movies',
+            HomeMovieController::class
+        );
+
+    });
