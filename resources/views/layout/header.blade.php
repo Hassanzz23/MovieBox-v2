@@ -384,14 +384,13 @@
 
 
                     @auth
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
 
-
-                        <a href="{{ route('logout') }}" class="nav-link">
-
-                            Log out
-
-                        </a>
-
+                            <button type="submit" class="nav-link border-0 bg-transparent">
+                                Log out
+                            </button>
+                        </form>
                     @endauth
 
 

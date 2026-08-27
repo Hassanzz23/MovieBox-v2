@@ -51,7 +51,7 @@ class AuthController extends Controller
     {
         if (auth()->check()) {
             if (auth()->user()->is_admin) {
-                return redirect()->route('admin');
+                return redirect()->route('home-movies.index');
             }
 
             return redirect()->route('home');
@@ -85,7 +85,7 @@ class AuthController extends Controller
         Auth::login($user);
 
         if ($user->is_admin) {
-            return redirect()->route('admin');
+            return redirect()->route('home-movies.index');
         }
 
         return redirect()->route('home');

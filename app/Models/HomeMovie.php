@@ -10,7 +10,15 @@ class HomeMovie extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'image',
+        'year',
+        'genre',
+        'description',
+        'category_id',
+        'sort_order',
+    ];
 
     public function movies()
     {

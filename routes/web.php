@@ -18,7 +18,7 @@ Route::post('/signup', [AuthController::class, 'registerPost'])->name('register.
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/profile', [ProfileController::class, 'index'])
     ->name('profile.index')
@@ -104,22 +104,20 @@ Route::delete('/favorites/{movie}', [FavoriteController::class, 'remove'])
     ->middleware('auth');
 
 
-Route::get('/admin', function () {
-    return view('admin.home.index');
-})->middleware(['auth', 'admin'])->name('admin');
-
 Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->group(function () {
 
-        Route::get('/', function () {
-            return view('admin.home.index');
-        })->name('admin');
-
+        Route::get('/', [HomeMovieController::class, 'index'])
+            ->name('admin');
 
         Route::resource(
             'home-movies',
             HomeMovieController::class
         );
 
+        Route::post(
+            'home-movies/reorder',
+            [HomeMovieController::class, 'reorder']
+        )->name('home-movies.reorder');
     });
