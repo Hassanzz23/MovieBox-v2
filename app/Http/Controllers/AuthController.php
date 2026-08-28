@@ -82,6 +82,12 @@ class AuthController extends Controller
             );
         }
 
+        if ($user->is_banned) {
+            return redirect()
+                ->back()
+                ->with('error', 'Your account has been banned.');
+        }
+
         Auth::login($user);
 
         if ($user->is_admin) {

@@ -176,28 +176,18 @@
 
                 <ul class="navbar-nav">
 
-
                     <li class="nav-item">
-
                         <a href="{{ route('home-movies.index') }}"
                             class="nav-link {{ request()->routeIs('home-movies.*') ? 'active' : '' }}">
-
                             Home
-
                         </a>
-
                     </li>
 
-
-
                     <li class="nav-item">
-
-                        <a href="#" class="nav-link">
-
+                        <a href="{{ route('admin.users.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                             Users
-
                         </a>
-
                     </li>
 
                 </ul>
