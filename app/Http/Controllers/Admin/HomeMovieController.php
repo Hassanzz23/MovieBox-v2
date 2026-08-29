@@ -63,7 +63,8 @@ class HomeMovieController extends Controller
             'image' => 'required|image',
             'title' => 'required|string|max:255',
             'year' => 'required|integer',
-            'genre' => 'required|string|max:255',
+            'genre' => 'required|array|min:1',
+            'genre.*' => 'string|in:Action,Adventure,Animation,Comedy,Crime,Documentary,Drama,Family,Fantasy,History,Horror,Music,Mystery,Romance,Sci-Fi,Thriller,War,Western',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
         ]);
@@ -80,7 +81,7 @@ class HomeMovieController extends Controller
             'image' => $imageName,
             'title' => $validated['title'],
             'year' => $validated['year'],
-            'genre' => $validated['genre'],
+            'genre' => implode(', ', $validated['genre']),
             'category_id' => $validated['category_id'],
             'description' => $validated['description'],
             'sort_order' => HomeMovie::max('sort_order') + 1,
@@ -109,7 +110,8 @@ class HomeMovieController extends Controller
             'image' => 'nullable|image',
             'title' => 'required|string|max:255',
             'year' => 'required|integer',
-            'genre' => 'required|string|max:255',
+            'genre' => 'required|array|min:1',
+            'genre.*' => 'string|in:Action,Adventure,Animation,Comedy,Crime,Documentary,Drama,Family,Fantasy,History,Horror,Music,Mystery,Romance,Sci-Fi,Thriller,War,Western',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
         ]);
@@ -132,7 +134,7 @@ class HomeMovieController extends Controller
 
         $homeMovie->title = $validated['title'];
         $homeMovie->year = $validated['year'];
-        $homeMovie->genre = $validated['genre'];
+        $homeMovie->genre = implode(', ', $validated['genre']);
         $homeMovie->category_id = $validated['category_id'];
         $homeMovie->description = $validated['description'];
 

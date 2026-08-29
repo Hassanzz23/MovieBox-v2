@@ -13,7 +13,6 @@ class HomeController extends Controller
             ->whereHas('category', function ($query) {
                 $query->where('title', 'Movie');
             })
-            ->limit(6)
             ->orderBy('sort_order')
             ->get();
 
@@ -21,7 +20,6 @@ class HomeController extends Controller
             ->whereHas('category', function ($query) {
                 $query->where('title', 'TV Show');
             })
-            ->limit(6)
             ->orderBy('sort_order')
             ->get();
 
@@ -29,7 +27,6 @@ class HomeController extends Controller
             ->whereHas('category', function ($query) {
                 $query->where('title', 'Animation');
             })
-            ->limit(6)
             ->orderBy('sort_order')
             ->get();
 
@@ -37,7 +34,6 @@ class HomeController extends Controller
             ->whereHas('category', function ($query) {
                 $query->where('title', 'Anime');
             })
-            ->limit(6)
             ->orderBy('sort_order')
             ->get();
 
