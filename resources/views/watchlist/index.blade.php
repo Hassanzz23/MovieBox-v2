@@ -436,7 +436,6 @@
 
 
         <div class="mt-3">
-            {{ $movies->links() }}
         </div>
     @else
         <div class="text-center py-5">

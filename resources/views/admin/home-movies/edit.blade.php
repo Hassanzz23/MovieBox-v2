@@ -134,8 +134,55 @@
                                 Genre
                             </label>
 
-                            <input type="text" name="genre" value="{{ old('genre', $homeMovie->genre) }}"
-                                class="form-control" required>
+                            @php
+                                $genres = [
+                                    'Action',
+                                    'Adventure',
+                                    'Animation',
+                                    'Comedy',
+                                    'Crime',
+                                    'Documentary',
+                                    'Drama',
+                                    'Family',
+                                    'Fantasy',
+                                    'History',
+                                    'Horror',
+                                    'Music',
+                                    'Mystery',
+                                    'Romance',
+                                    'Sci-Fi',
+                                    'Thriller',
+                                    'War',
+                                    'Western',
+                                ];
+
+                                $selectedGenres = old(
+                                    'genre',
+                                    $homeMovie->genre ? array_map('trim', explode(',', $homeMovie->genre)) : [],
+                                );
+                            @endphp
+
+                            <div class="row g-2">
+
+                                @foreach ($genres as $genre)
+                                    <div class="col-6 col-md-4 col-lg-3">
+
+                                        <div class="form-check">
+
+                                            <input class="form-check-input" type="checkbox" name="genre[]"
+                                                value="{{ $genre }}" id="genre-{{ Str::slug($genre) }}"
+                                                {{ in_array($genre, $selectedGenres) ? 'checked' : '' }}>
+
+                                            <label class="form-check-label" for="genre-{{ Str::slug($genre) }}">
+                                                {{ $genre }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+                                @endforeach
+
+                            </div>
 
                         </div>
 

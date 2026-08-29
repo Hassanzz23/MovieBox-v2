@@ -23,6 +23,16 @@ MovieBox v2 is a Laravel-based movie management application that provides a comp
 - **Movie Rating** — Rate watched movies.
 - **Add to Watchlist from Home** — Add movies directly to your watchlist from the home page.
 
+### Admin Pannel
+- **Admin Authentication** — Restrict access to the admin panel to authorized administrators.
+- **Homepage Movie Management** — Add, edit, and delete movies displayed on the homepage.
+- **Movie Categories** — Assign categories to homepage movies.
+- **Multiple Genres** — Assign multiple genres to a movie.
+- **Movie Ordering** — Change the display order of homepage movies.
+- **User Management** — View registered users from the admin panel.
+- **Ban Users** — Prevent users from accessing protected parts of the application.
+- **Unban Users** — Restore access for banned users.
+
 ### User Profile
 
 - **Profile Page** — View user account information.

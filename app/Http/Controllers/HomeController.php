@@ -13,28 +13,28 @@ class HomeController extends Controller
             ->whereHas('category', function ($query) {
                 $query->where('title', 'Movie');
             })
-            ->limit(6)
+            ->orderBy('sort_order')
             ->get();
 
         $tvShows = HomeMovie::with('category')
             ->whereHas('category', function ($query) {
                 $query->where('title', 'TV Show');
             })
-            ->limit(6)
+            ->orderBy('sort_order')
             ->get();
 
         $animations = HomeMovie::with('category')
             ->whereHas('category', function ($query) {
                 $query->where('title', 'Animation');
             })
-            ->limit(6)
+            ->orderBy('sort_order')
             ->get();
 
         $anime = HomeMovie::with('category')
             ->whereHas('category', function ($query) {
                 $query->where('title', 'Anime');
             })
-            ->limit(6)
+            ->orderBy('sort_order')
             ->get();
 
         return view('home', compact(
