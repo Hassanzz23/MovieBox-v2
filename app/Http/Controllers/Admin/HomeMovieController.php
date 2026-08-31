@@ -64,7 +64,7 @@ class HomeMovieController extends Controller
             'title' => 'required|string|max:255',
             'year' => 'required|integer',
             'genre' => 'required|array|min:1',
-            'genre.*' => 'string|in:Action,Adventure,Animation,Comedy,Crime,Documentary,Drama,Family,Fantasy,History,Horror,Music,Mystery,Romance,Sci-Fi,Thriller,War,Western',
+            'genre.*' => 'string|in:Action,Adventure,Animation,Comedy,Crime,Documentary,Drama,Family,Fantasy,History,Horror,Music,Sport,Mystery,Romance,Sci-Fi,Thriller,War,Western',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
         ]);
@@ -111,7 +111,7 @@ class HomeMovieController extends Controller
             'title' => 'required|string|max:255',
             'year' => 'required|integer',
             'genre' => 'required|array|min:1',
-            'genre.*' => 'string|in:Action,Adventure,Animation,Comedy,Crime,Documentary,Drama,Family,Fantasy,History,Horror,Music,Mystery,Romance,Sci-Fi,Thriller,War,Western',
+            'genre.*' => 'string|in:Action,Adventure,Animation,Comedy,Crime,Documentary,Drama,Family,Fantasy,History,Horror,Music,Sport,Mystery,Romance,Sci-Fi,Thriller,War,Western',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
         ]);

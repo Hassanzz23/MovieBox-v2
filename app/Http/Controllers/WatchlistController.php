@@ -168,16 +168,6 @@ class WatchlistController extends Controller
             'type' => 'required|in:movie,series,episode',
         ]);
 
-        $exists = Movie::where('user_id', auth()->id())
-            ->where('imdb_id', $validated['imdb_id'])
-            ->exists();
-
-        if ($exists) {
-            return redirect()
-                ->route('watchlist.index')
-                ->with('info', 'This movie is already in your WatchList.');
-        }
-
         $response = Http::timeout(10)->get(
             'https://www.omdbapi.com/',
             [
@@ -195,13 +185,34 @@ class WatchlistController extends Controller
 
         $omdbMovie = $response->json();
 
-        $homeMovie = HomeMovie::where('title', $omdbMovie['Title'] ?? '')
-            ->first();
-
         if (($omdbMovie['Response'] ?? 'False') === 'False') {
             return redirect()
                 ->route('watchlist.index')
                 ->with('error', 'Movie information not found.');
+        }
+
+        $homeMovie = HomeMovie::where(
+            'imdb_id',
+            $omdbMovie['imdbID'] ?? $validated['imdb_id']
+        )
+            ->orWhere('title', $omdbMovie['Title'] ?? '')
+            ->first();
+
+        $exists = Movie::where('user_id', auth()->id())
+            ->where(function ($query) use ($validated, $homeMovie) {
+
+                $query->where('imdb_id', $validated['imdb_id']);
+
+                if ($homeMovie) {
+                    $query->orWhere('home_movie_id', $homeMovie->id);
+                }
+            })
+            ->exists();
+
+        if ($exists) {
+            return redirect()
+                ->route('watchlist.index')
+                ->with('info', 'This movie is already in your WatchList.');
         }
 
         $categoryTitle = match ($validated['type']) {
@@ -233,16 +244,12 @@ class WatchlistController extends Controller
                 ->with('error', 'Movie poster could not be downloaded.');
         }
 
-
         $year = null;
 
         if (!empty($omdbMovie['Year'])) {
             preg_match('/^\d{4}/', $omdbMovie['Year'], $matches);
             $year = $matches[0] ?? null;
         }
-
-        $homeMovie = HomeMovie::where('imdb_id', $omdbMovie['imdbID'] ?? $validated['imdb_id'])
-            ->first();
 
         Movie::create([
             'user_id' => auth()->id(),
@@ -317,8 +324,19 @@ class WatchlistController extends Controller
                 ->with('error', 'Movie information not found.');
         }
 
+        $homeMovie = HomeMovie::where('imdb_id', $movie['imdbID'])
+            ->orWhere('title', $movie['Title'])
+            ->first();
+
         $alreadyInWatchlist = Movie::where('user_id', auth()->id())
-            ->where('imdb_id', $movie['imdbID'])
+            ->where(function ($query) use ($movie, $homeMovie) {
+
+                $query->where('imdb_id', $movie['imdbID']);
+
+                if ($homeMovie) {
+                    $query->orWhere('home_movie_id', $homeMovie->id);
+                }
+            })
             ->exists();
 
         return view('watchlist.omdb-show', compact(
@@ -326,6 +344,7 @@ class WatchlistController extends Controller
             'alreadyInWatchlist'
         ));
     }
+
 
 
     public function show(Movie $movie)

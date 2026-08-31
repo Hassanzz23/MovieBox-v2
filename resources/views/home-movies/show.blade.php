@@ -54,6 +54,7 @@
 
                         <textarea disabled class="form-control" rows="5">{{ $homeMovie->description }}</textarea>
                     </div>
+                    
                     @if ($inWatchlist)
                         <button type="button" class="btn btn-secondary" disabled>
                             Already in Watchlist

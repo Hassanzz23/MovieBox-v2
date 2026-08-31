@@ -148,6 +148,7 @@
                                     'History',
                                     'Horror',
                                     'Music',
+                                    'Sport',
                                     'Mystery',
                                     'Romance',
                                     'Sci-Fi',
