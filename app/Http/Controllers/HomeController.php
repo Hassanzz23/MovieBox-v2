@@ -10,6 +10,7 @@ class HomeController extends Controller
     public function index()
     {
         $movies = HomeMovie::with('category')
+            ->where('is_visible', true)
             ->whereHas('category', function ($query) {
                 $query->where('title', 'Movie');
             })
@@ -17,6 +18,7 @@ class HomeController extends Controller
             ->get();
 
         $tvShows = HomeMovie::with('category')
+            ->where('is_visible', true)
             ->whereHas('category', function ($query) {
                 $query->where('title', 'TV Show');
             })
@@ -24,6 +26,7 @@ class HomeController extends Controller
             ->get();
 
         $animations = HomeMovie::with('category')
+            ->where('is_visible', true)
             ->whereHas('category', function ($query) {
                 $query->where('title', 'Animation');
             })
@@ -31,6 +34,7 @@ class HomeController extends Controller
             ->get();
 
         $anime = HomeMovie::with('category')
+            ->where('is_visible', true)
             ->whereHas('category', function ($query) {
                 $query->where('title', 'Anime');
             })

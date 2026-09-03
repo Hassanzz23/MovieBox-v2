@@ -41,7 +41,6 @@
             display: block;
         }
 
-        /* Edit / Delete buttons */
         .movie-actions {
             position: absolute;
             bottom: 8px;
@@ -96,7 +95,6 @@
             opacity: 0.5;
         }
 
-        /* Slider arrows */
         .movie-arrow {
             position: absolute;
 
@@ -146,7 +144,6 @@
             right: 8px;
         }
 
-        /* Dark mode */
         [data-bs-theme="dark"] .movie-arrow {
             background: rgba(255, 255, 255, 0.18);
             color: white;
@@ -193,9 +190,18 @@
     @if ($movies->count())
         <div class="mb-5">
 
-            <h3 class="mb-3">
-                Movies you may like
-            </h3>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h3 class="mb-0">
+                    Movies you may like
+                </h3>
+
+                <a href="{{ route('home-movies.statistics', $movies->first()->category_id) }}"
+                    class="btn btn-outline-primary btn-sm">
+                    Statistics
+                </a>
+
+            </div>
 
             <div class="movie-slider">
 
@@ -222,6 +228,21 @@
 
                                         <button type="submit" class="btn btn-danger btn-sm w-100">
                                             Delete
+                                        </button>
+
+                                    </form>
+
+                                    <form action="{{ route('home-movies.visibility', $movie) }}" method="POST"
+                                        class="flex-fill">
+
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <button type="submit"
+                                            class="btn {{ $movie->is_visible ? 'btn-secondary' : 'btn-success' }} btn-sm w-100">
+
+                                            {{ $movie->is_visible ? 'Hide' : 'Show' }}
+
                                         </button>
 
                                     </form>
@@ -265,9 +286,18 @@
     @if ($tvShows->count())
         <div class="mb-5">
 
-            <h3 class="mb-3">
-                TV Shows you may like
-            </h3>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h3 class="mb-0">
+                    TV Shows you may like
+                </h3>
+
+                <a href="{{ route('home-movies.statistics', $tvShows->first()->category_id) }}"
+                    class="btn btn-outline-primary btn-sm">
+                    Statistics
+                </a>
+
+            </div>
 
             <div class="movie-slider">
 
@@ -294,6 +324,21 @@
 
                                         <button type="submit" class="btn btn-danger btn-sm w-100">
                                             Delete
+                                        </button>
+
+                                    </form>
+
+                                    <form action="{{ route('home-movies.visibility', $show) }}" method="POST"
+                                        class="flex-fill">
+
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <button type="submit"
+                                            class="btn {{ $show->is_visible ? 'btn-secondary' : 'btn-success' }} btn-sm w-100">
+
+                                            {{ $show->is_visible ? 'Hide' : 'Show' }}
+
                                         </button>
 
                                     </form>
@@ -337,9 +382,18 @@
     @if ($animations->count())
         <div class="mb-5">
 
-            <h3 class="mb-3">
-                Animations you may like
-            </h3>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h3 class="mb-0">
+                    Animations you may like
+                </h3>
+
+                <a href="{{ route('home-movies.statistics', $animations->first()->category_id) }}"
+                    class="btn btn-outline-primary btn-sm">
+                    Statistics
+                </a>
+
+            </div>
 
             <div class="movie-slider">
 
@@ -367,6 +421,21 @@
 
                                         <button type="submit" class="btn btn-danger btn-sm w-100">
                                             Delete
+                                        </button>
+
+                                    </form>
+
+                                    <form action="{{ route('home-movies.visibility', $animation) }}" method="POST"
+                                        class="flex-fill">
+
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <button type="submit"
+                                            class="btn {{ $animation->is_visible ? 'btn-secondary' : 'btn-success' }} btn-sm w-100">
+
+                                            {{ $animation->is_visible ? 'Hide' : 'Show' }}
+
                                         </button>
 
                                     </form>
@@ -410,9 +479,18 @@
     @if ($anime->count())
         <div class="mb-5">
 
-            <h3 class="mb-3">
-                Anime you may like
-            </h3>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h3 class="mb-0">
+                    Anime you may like
+                </h3>
+
+                <a href="{{ route('home-movies.statistics', $anime->first()->category_id) }}"
+                    class="btn btn-outline-primary btn-sm">
+                    Statistics
+                </a>
+
+            </div>
 
             <div class="movie-slider">
 
@@ -438,6 +516,21 @@
 
                                         <button type="submit" class="btn btn-danger btn-sm w-100">
                                             Delete
+                                        </button>
+
+                                    </form>
+
+                                    <form action="{{ route('home-movies.visibility', $item) }}" method="POST"
+                                        class="flex-fill">
+
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <button type="submit"
+                                            class="btn {{ $item->is_visible ? 'btn-secondary' : 'btn-success' }} btn-sm w-100">
+
+                                            {{ $item->is_visible ? 'Hide' : 'Show' }}
+
                                         </button>
 
                                     </form>
@@ -532,11 +625,6 @@
             updateButtons();
 
 
-
-            // =========================
-            // Drag & Drop
-            // =========================
-
             const cards = row.querySelectorAll('.movie-card');
 
             cards.forEach(card => {
@@ -614,7 +702,6 @@
 
         });
 
-        // Drag & Drop
         document.querySelectorAll('.movie-row').forEach(row => {
 
             let draggedCard = null;

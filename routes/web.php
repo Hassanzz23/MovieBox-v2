@@ -9,6 +9,7 @@ use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Admin\HomeMovieController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\HomeMovieStatisticsController;
 
 
 
@@ -137,4 +138,10 @@ Route::prefix('admin')
             'users/{user}',
             [UserController::class, 'show']
         )->name('admin.users.show');
+
+        Route::patch('home-movies/{homeMovie}/visibility', [HomeMovieController::class, 'toggleVisibility'])
+            ->name('home-movies.visibility');
+
+        Route::get('home-movies/{category}/statistics', [HomeMovieStatisticsController::class, 'index'])
+            ->name('home-movies.statistics');
     });

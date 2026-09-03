@@ -176,4 +176,12 @@ class HomeMovieController extends Controller
             'success' => true,
         ]);
     }
+
+    public function toggleVisibility(HomeMovie $homeMovie)
+    {
+        $homeMovie->is_visible = !$homeMovie->is_visible;
+        $homeMovie->save();
+
+        return back()->with('success', 'Movie visibility updated successfully.');
+    }
 }
